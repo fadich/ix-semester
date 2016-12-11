@@ -1,0 +1,710 @@
+         МИНИСТЕРСТВО   ОБРАЗОВАНИЯ    УКРАИНЫ
+
+   ХАРЬКОВСКИЙ  ГОСУДАРСТВЕННЫЙ  ТЕХНИЧЕСКИЙ  УНИВЕРСИТЕТ 
+                     РАДИОЭЛЕКТРОНИКИ
+
+
+
+
+
+
+
+
+                МЕТОДИЧЕСКИЕ  УКАЗАНИЯ
+       К  САМОСТОЯТЕЛЬНОЙ  РАБОТЕ  СТУДЕНТОВ  ПО  КУРСУ
+       "ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ И ЭКСПЕРТНЫЕ СИСТЕМЫ"
+        ПО ИЗУЧЕНИЮ ОБОЛОЧКИ ПРОДУКЦИОННОЙ СИСТЕМЫ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      ХАРЬКОВ  1999
+
+
+         МИНИСТЕРСТВО   ОБРАЗОВАНИЯ    УКРАИНЫ
+
+   ХАРЬКОВСКИЙ  ГОСУДАРСТВЕННЫЙ  ТЕХНИЧЕСКИЙ  УНИВЕРСИТЕТ 
+                     РАДИОЭЛЕКТРОНИКИ
+
+
+
+
+
+
+
+                МЕТОДИЧЕСКИЕ  УКАЗАНИЯ
+       К  САМОСТОЯТЕЛЬНОЙ  РАБОТЕ  СТУДЕНТОВ  ПО  КУРСУ
+      "ИСКУССТВЕННЫЙ  ИНТЕЛЛЕКТ  И  ЭКСПЕРНЫЕ  СИСТЕМЫ"
+       ПО ИЗУЧЕНИЮ ОБОЛОЧКИ ПРОДУКЦИОННОЙ СИСТЕМЫ
+
+
+      для студентов специальностей 7.091401 "СИСТЕМЫ  
+      УПРАВЛЕНИЯ И АВТОМАТИКА" и 7.080402 "ИНФОРМАЦИОННЫЕ
+      ТЕХНОЛОГИИ ПРОЕКТИРОВАНИЯ"
+
+
+
+                                     УТВЕРЖДЕНО
+                                     кафедрой системотехники
+                                     Протокол  N    от
+
+
+     Составитель: М.Ю. Вишняк
+
+
+     Ответственный за выпуск: Э.Г. Петров
+
+
+
+
+
+                        ХАРЬКОВ 1999
+
+
+     Методичнє вказєвки до самостiйних робєт студентiв з курсу
+"Штучний iнтелект та експертнi системи" для студентєв спецєаль-
+ностей 7.091401 - "Системи управлєння є автоматика", 7.080402 - 
+"Iнформацiйнi технологiў проектування" /Упоряд: М.Ю. Вишняк. - 
+Харкєв: ХТУРЕ, 1999. -   с.
+
+
+
+                 Навчальне видання
+
+
+
+
+     Упорядник: М.Ю. Вишняк
+
+
+
+     Вєдповєдальний випусковий Е.Г. Петров
+                      Редактор
+
+
+
+
+
+
+
+
+План 1998, поз.
+
+Пєдп. до друку             Формат 60х84          Папєр друк.
+Умов. друк. арк.           Облєк вид. арк.       Тираж 100 прим.
+Зам. N                     Цєна договєрна.
+----------------------------------------------------------------
+          ХТУРЕ, 310726 Харкєв, просп. Ленєна, 14
+----------------------------------------------------------------
+           Надруковано в учбово-виробничому
+        видавнично-полєграфєчному центрє ХТУРЕ
+           310726 Харкєв, просп. Ленєна, 14
+
+
+
+Введение
+1. Общие положения.
+2. Цель самостоятельной работы
+3. Методические указания по организации самостоятельной
+   работы
+1.6 Контрольные вопросы и задания.
+Рекомендуемая литература
+
+      ОПИСАНИЕ УЧЕБНОЙ ОБОЛОЧКИ ЭКСПЕРТНОЙ СИСТЕМЫ
+     
+     Оболочка работает со следующими файлами:
+<имя_ЭС>.rul - файл правил;
+<имя_ЭС>.fct - файл объект-вопрос к объекту-список значений;
+<имя_ЭС>.res - файл со структурой результата;
+<имя_ЭС><номер>.ptc - файл протокола,
+где <имя_ЭС> - имя экспертной системы.
+
+     Запись правил в файл <имя>.rul выполняется в следующем
+формате:
+    RULE (номер)  [cf = число]         
+      IF
+        объект = значение and
+          .  .  .  .  .  .
+        объект = значение,
+    THEN
+        объект = значение [cf = число]  and
+          .  .  .  .  .  .  .  .  .
+        объект = значение [cf = число].
+Вместо ключевых слов RULE, cf, IF, THEN, and можно применять
+слова ПРАВИЛО, ку, ЕСЛИ, ТО, соответственно.
+     Структура файла <имя>.fct:
+имя_объекта ([вопрос_к_объекту]) = значение_1, значение_2, ...,
+                                   значение_N;
+Последняя запись заканчивается точкой. 
+ 
+     expert.h - файл заголовков
+     ========
+     Структура LIST - структура для построения списков; поле 
+elem - элемент списка; поле next - ссылка на следующий элемент
+списка.
+     Структура VALUE - структура для значений объектов. В поле
+name записывается имя значения в виде символьной строки; поле
+cert содержит числовое значение коэффициента уверенности, кото-
+рый принимает значения в интервале [0,1], где 0 означает, что
+факта <соответствующий_объект = данное_значение> в рабочей об-
+ласти нет, а не 0 - факт туда помещен; поле prem - ссылка на 
+список правил, включающих пару объект-данное_значение в часть 
+"ЕСЛИ" (или "IF"); поле con - ссылка на список правил, включаю-
+щих пару объект-данное_значение в часть "ТО" (или "THEN"); поле 
+next - ссылка на следующий элемент списка VALUE.
+     Структура OBJECT - структура для записи объектов. В поле
+name записывается имя объекта в виде символьной строки; в поле
+question вносится текст вопроса к объекту; поле value содержит
+ссылку на список значений, которые может принимать данный объект;
+поле next - указатель на следующий объект списка.
+     Структура PREM - структура для записи предпосылок правил.
+Поле obj содержит ссылку на объект, входящий в предпосылку, а
+поле value - ссылку на соответствующее значение; next - ссылка
+на следующий элемент списка предпосылок данного правила.
+     Структура CON - структура для записи заключений правил.
+Аналогично структуре PREM, поле obj содержит ссылку на объект,
+а поле value - на значение; next - следующий элемент списка зак-
+лючений.
+     Структура RULE - структура для записи правил. В поле numb
+заносится номер правила; поле cert содержит коэффициент надеж-
+ности правила, который принимает значения из интервала (0,1];
+в поле used записывается код, принимающий одно из трех значений:
+0 - правило не использовалось, 1 - правило применялось и срабо-
+тало и 2 - правило находится в противоречии с фактами рабочей 
+области и не может быть применено; поле prem содержит указатель
+на список предпосылок данного правила; поле con указывает на
+список заключений данного правила; next - указатель на следую-
+щее правило базы знаний.
+/*  expert.h - h_file for student's expert system shell   
+*/
+struct LIST     /* universal list  */
+   {
+            void  *elem;
+     struct LIST  *next;
+   };
+struct VALUE
+   {
+             char  *name;    /* symbolic name of value     */
+            short   cert;    /* certenty factor            */
+      struct LIST  *prem,    /* list of the rules including this
+                                object-value pair in the prem-part */
+                   *con;     /* same only for con-part     */
+     struct VALUE  *next;    /* next member of value list  */
+   };
+struct OBJECT
+   {
+              char  *name,     /* symbolic name of object    */
+                    *question; /* text of question to object */
+      struct VALUE  *value;    /* pointer on value list      */
+     struct OBJECT  *next;     /* next member of object list */
+   };
+struct PREM
+   {
+     struct OBJECT  *obj;     /* pointer on the object     */
+      struct VALUE  *value;   /* pointer on the value      */
+       struct PREM  *next;    /* next prem of this rule    */
+   };
+struct CON
+   {
+     struct OBJECT  *obj;     /* pointer on the object         */
+      struct VALUE  *value;   /* pointer on the value          */
+               int  cert;     /* certenty factor for this con  */
+        struct CON  *next;    /* next con of this rule         */
+   };
+struct RULE
+   {
+             int  numb,    /* number of this rule                 */
+                  cert;    /* factor of realability of this rule  */
+            char  used;    /* 0 - rule doesn't be used
+                              1 - rule has been used
+                              2 - rule is false: contradiction with facts */
+     struct PREM  *prem;   /* pointer on prem list                */
+     struct CON   *con;    /* pointer on con list                 */
+     struct RULE  *next;   /* next rule of rule list              */
+   };
+
+struct STACK
+   {
+     struct OBJECT *goal;
+     struct STACK  *next;
+   };
+
+     T_Infer.c - главная функция (main)
+     =========
+     Глобальные переменные:
+    prtcl - указатель на файл;
+ obj_list - ссылка на 1-й элемент списка объектов;
+rule_list - ссылка на 1-й элемент списка правил;
+      res - ссылка на 1-й элемент списка результата;
+stack_ptr - ссылка на 1-й элемент стека целей;
+        g - рабочая символьная строка.
+     Опции:
+"-prot" - необходимо формировать протокол;
+"-expl" - необходимо давать пояснения;
+"-step" - пошаговое выполнение программы.
+     Формат запуска программы:
+    pgm имя_ЭС [опции: -prot -expl -step]
+
+
+     TextFact.c 
+     ==========
+- считывает файл с расширением <>.fct в оперативную память, рас-
+познает формат записи файла, выделяет имя объекта, если есть 
+вопрос к объекту, то выделяет текст вопроса и выделяет из списка
+значения относящиеся к этому объекту.
+Используется модель конечного автомата.
+Аргумент функции fn - имя экспертной системы.
+Переменные:
+flag - текущее состояние;
+p_flag - предыдущее состояние распознавателя;
+pos - индекс элемента (номер байта) рабочего слова word.
+В массив word записывают текущие имена,текст вопроса,значения.
+Состояния (значения переменных flag, p_flag):
+0 - считывается имя объекта, затем - обращение к AddObj;
+1 - считывается имя значения, затем - обращение к AddValue;
+2 - считывается текст вопроса, затем обращение к AddQuest;
+Если flag = 3, то это означает, что символьная строка уже счита-
+на, а значение p_flag - показывает, что считанная строка содер-
+жит (имя объекта, имя значения, текст вопроса).
+
+/* TextFact.c               IBM                    10.04.95
+   Reading of text-fact-file      CADSHELL - complex
+   Format of the text-fact-file is:
+ object (question_to_object) = value, value, ... , value;(.)
+*/
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include "expert.h"
+
+char TextFact(fn)
+    char *fn;
+{
+    FILE  *pf;
+    char  word[80], s,
+          flag, p_flag, pos;
+    struct OBJECT *curr_obj;
+
+  curr_obj = NULL;
+  flag = p_flag = pos = 0;
+  strcpy (word,fn);
+  strcat (word, ".fct");
+  if ((pf = fopen(word, "r")) == NULL)
+    { cprintf("\n\rFile \"%s\" isn't opened for reading", word);
+      getch();
+      return 1;
+    }
+  cprintf("\n\rReading of the file \"%s\"\n\r", word);
+  while(1)    /* cycle of symbols reading from text-fact-file */
+   {
+     s = fgetc(pf);
+     if (feof(pf)) break;
+     switch(s)
+      {
+        case ' ': break;
+        case ',':
+        case '=': flag = 1;  break;
+        case ';': flag = 0;  break;
+        case '(': flag = 2;  break;
+        case ')': break;
+        case '.': flag = 0;  break;
+        case '\0': break;
+	case '\n': break;
+	case '\r':
+        case '\t': break;
+        default  : if (flag < 3)   /* symbol of name has been read */
+                      { p_flag = flag; flag = 3;
+                      }
+                   word[pos++] = s; /*current symbol has been written
+                                      into work word   */
+      }  /* end of switch(s)  */
+     if ((flag < 3) && pos)  /* symbol of name has been read  */
+           word[pos] = '\0';
+        else
+          continue;
+     switch (p_flag)
+       {
+	 case 1: AddValue (curr_obj, word);  break;
+	 case 2: AddQuest (curr_obj, word, 100);  break;
+	 case 0: AddObj (&curr_obj, word);
+       }
+     pos = 0;
+   } /* end of while   */
+  cputs("  ");
+  fclose(pf);
+  return 0;
+} /* end of TextFact.c ------------------------------------------------- */
+
+
+     TextRule.c 
+     ==========
+- основная программа считывания файла с расширением <>.rul в 
+оперативную память (считывает список правил или базу знаний).
+Включает модули: WordType(), WordProc().
+Аргумент функции fn - имя экспертной системы.
+Переменные:
+wordflag - "флаг", принимает значения: 0 - текущий символ раз-
+           делитель; 1 - считывается слово; 2 - слово считано;
+word_pos - текущая позиция в символьной строке word;
+word - рабочий массив, в который считываются последовательно
+       символьные строки из файла <>.rul.
+pf, filename, s - рабочие переменные.
+
+Модуль WordType() определяет тип слова. Каждому ключевому слову 
+присвоен свой номер. Если анализируемое слово не является ключе-
+вым, то его типу приписывается значение = 6. Коды ключевых слов 
+используются для выделения состояния конечного автомата, распоз-
+нающего формат записей файла <>.rul. Аргументом функции является
+слово, для которого определяется тип. WordType возвращает число,
+соответствующее типу слова.
+
+/* WordType.c                C-UNIX                       26.03.93
+   CADSHELL - complex
+*/
+#include <stdio.h>
+#include <string.h>
+#include "expert.h"
+
+int WordType (wd)
+   char *wd;
+{
+  switch (wd[0])
+   {
+     case 'R': if (!strcmp (wd, "RULE")) return 1;
+               break;
+     case 'П': if (!strncmp (wd, "ПРАВИЛО", 7) ||
+                   !strncmp (wd, "Правило", 7))
+                       return 1;
+               break;
+     case 'I': if (!strcmp (wd, "IF")) return 2;
+               break;
+     case 'Е': if (!strncmp (wd, "ЕСЛИ", 4) ||
+                   !strncmp (wd, "Если", 4))
+                       return 2;
+               break;
+     case 'c': if (!strcmp (wd, "cf")) return 3;
+               break;
+     case 'К':
+     case 'к': if (!strncmp (wd, "КУ", 2) ||
+                   !strncmp (wd, "ку", 2))
+                       return 3;
+     case 'T': if (!strcmp (wd, "THEN")) return 4;
+     case 'Т': if (!strncmp (wd, "ТО", 2) ||
+                   !strncmp (wd, "То", 2))
+                       return 4;
+               break;
+     case 'a': if (!strcmp (wd, "and")) return 5;
+               break;
+     case 'и': if (strlen (wd) == 1)  return 5;
+    }
+  return 6;
+}
+/* WordType ----------------------------------------------------------- */
+
+
+WordProc() - обработка слова.
+Аргументы: str - текущее анализируемое слово; status - тип сло-
+ва. Функция возвращает 1, если ошибоки записи правила в файле 
+<>.rul пока не обнаружено, иначе возвращает 0. 
+Переменные: stage - стадия, текущее состояние распознавателя;
+num - номер; cf - коэффициент уверенности; pre_str и v_str -
+символьные строки для записи факта (имен объекта и значения).
+При каждом обращении к WordProc в подпрограмму передается толь-
+ко одна символьная строка. Для записи предпосылки или заключения
+необходимы две строки: для имени объекта и соответствующего зна-
+чения. Поэтому при первом обращении имя объекта записывается в
+строку pre_str, а при следующем обращении в строку v_str записы-
+вается его значение.
+Стадии ( состояния распознавателя) имеют следующую нумерацию:
+1 - считано ключевое слово RULE (ПРАВИЛО);
+2 - считан номер правила;
+3 - считано ключевое слово cf (ку) (коэффициент ослабления пра-
+    вила);
+4 - считано значение коэффициента ослабления правила;
+5 - считано ключевое слово IF (ЕСЛИ);
+6 - считано имя объекта предпосылки;
+7 - считано значение объекта предпосылки;
+9 - считано ключевое слово THEN (ТО);
+10- считано имя объекта заключения;
+11- считано значение объекта заключения;
+12- считано ключевое слово cf (ку);
+13- считано значение коэффициента уверенности заключения.
+Предпосылок и заключений может быть несколько. Следовательно,
+если встречается ключевое слово "and" ("и"), то значит, что  
+следует новая предпосылка или заключение. Поэтому автомат воз-
+вращается в 1-ом случае в состояние на считывание предпосылки;
+а во 2-ом - на считывание следующего заключения.
+Если считано ключевое слово ТО ( THEN ), то это значит, что 
+список предпосылок закончен. Если считывается ключевое слово
+RULE (ПРАВИЛО) нового правила или точка, то это означает, что 
+предыдущее правило считано.
+В функции WordProc осуществляется обращение к подпрограммам:
+AddRule, AddPrem, AddCon. 
+Переменная *c_rule - указатель на текущее правило.
+
+/* WordProc.c                  IBM                    20.10.97
+   CADSHELL - complex
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "expert.h"
+
+char WordProc (str, status)     /*  1 - Ok, 0 - error is present */
+     char *str;
+      int status;
+{
+           extern FILE  *debfile;
+           extern char  debug;
+            static int  stage = 0,
+                        num, cf;
+           static char  pre_str[40], v_str[40];
+    static struct RULE  *c_rule;
+
+   if (debug == 2)
+     fprintf(debfile,"WP: <%s> = %d, stage = %d",
+                       str, status, stage);
+  switch (status)
+    {
+      case 1: if (stage > 10 ) AddCon (c_rule, pre_str, v_str, cf);
+              stage = 1; /*  word "RULE" has been read      */
+              break;
+      case 2: if (stage == 1) /* word "IF" has been read    */
+                 {
+                   puts("Number of rule is absent");
+                   return 0;
+                 }
+              if (stage == 2) cf = 100;
+              stage = 5;
+              c_rule = (struct RULE *) AddRule(num, cf);
+              break;
+      case 3: if (stage == 11)   stage = 12;  /* word "CF" has been read  */
+                  /* next word must be certainty factor */
+                else
+                    if (stage == 2) stage = 3;
+                       else
+                         if (stage == 1)
+                           {
+                             puts("Number of rule is absent");
+                             return 0;
+                           };
+              break;
+      case 4: stage = 9; break;          /* THEN */
+      case 5: if (stage == 7)  stage = 5;   /*  and  */
+                 else
+                     {  stage = 9;
+                        AddCon(c_rule, pre_str, v_str, cf);
+                     }
+              break;
+      case 6: switch (stage)
+               {
+                 case  1: num = atoi (str);
+                          stage = 2; break;
+                 case  3: cf = atoi (str);
+                          stage = 4;  break;
+                 case  5: strcpy (pre_str, str);  /*  obj */
+                          stage = 6;  break;
+                 case  6: AddPrem (c_rule, pre_str, str);
+                          stage = 7;  break;
+                 case  9: strcpy (pre_str, str);    /*  obj */
+                          stage = 10;   break;
+                 case 10: strcpy (v_str, str);
+                          cf = 100;
+                          stage = 11;  break;
+                 case 12: cf = atoi (str);
+                          stage = 13; break;
+               } /* end of switch (stage)   */
+    } /* end of switch (status)    */
+    if (debug == 2) fprintf(debfile," new_stage = %d\n", stage);
+  return 1;
+}
+/*WordProc.c--------------------------------------------------------------*/
+
+
+          TextRule
+          ========
+Первые несколько строк формируют имя файла <имя_ЭС>.rul.
+Затем он открывается. В цикле WHILE происходит посимвольное счи-
+тывание информации из файла и ее анализ. Оператор тела цикла
+s = fgetc(pf) считывает символ. Затем символ s проверяется: явля-
+ется ли он ограничителем, либо символом конца файла. Если s==EOF
+(символ конца файла), то производится обращение к WordProc для
+считывания последнего заключения последнего правила файла.
+Для записи считанного слова используется рабочий массив word[].
+Рабочая переменная word_pos - указывает на номер байта в масси-
+ве word[], куда будет записываться считываемый символ s. Пока
+считывается слово, символы записываются в массив word. Как толь-
+ко слово полностью считано, то обращением к функции WordType 
+определяется тип слова и затем функция WordProc отрабатывает те-
+кущее слово.
+
+/* TextRule.c            IBM               20.10.97
+  Reading of text-rule-file
+  CADSHELL - complex
+*/
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include "expert.h"
+
+char TextRule(fn)
+   char *fn;
+{
+        FILE  *pf;
+        char  filename[40], s,
+              word[40],
+              wordflag = 0,
+              word_pos = 0;
+
+ strcpy (filename, fn);
+ strcat (filename, ".rul");
+ if ((pf = fopen(filename,"r")) == NULL)
+   {
+     printf("\nFile \"%s\" isn't opened for reading",filename);
+     getch();
+     return 1;
+   }
+ cprintf("Reading of rule base from file: \"%s\"\n\r",
+	   filename);
+ while(1)  /* cycle of symbols reading from rule base file */
+   {
+     s = fgetc(pf);
+     if (s == ' ' ||  s == '=' || s == '\0' || s == '\n' ||
+         s == '(' ||  s == ')' || s == '.'  || s == ','  ||
+         s == ';' ||  s == '\r' || s == '\t'|| s == EOF)
+       { /* delimiter has read  */
+         if ( s == EOF )
+	    { WordProc (word, 1);
+	      break;
+	    }
+	 if (wordflag)
+	    { /* word has read     */
+	      wordflag = 2;
+	      word[word_pos] = '\0';
+	    }
+       }
+      else
+         {
+           if (!wordflag) wordflag = 1;
+           word[word_pos++] = s;
+         }
+     if (wordflag < 2) continue;
+     wordflag = word_pos = 0;
+     /* word processing  */
+     s = (char) WordType(word);
+     if (!(int) WordProc(word, (int) s) ) puts("Error");
+   } /* end of while - cycle                     */
+ fclose(pf);
+ return 0;
+}
+/* TextRule ------------------------------------------------------------ */
+
+
+          Res_Strc()
+          ==========
+   -  считывает содержимое файла <>.res в оперативную память.
+Здесь применяется линейная структура, т.е. задается список объек-
+тов, для которых в ходе сеанса необходимо определить значения.
+Переменная типа struct LIST *res - это указатель на список этих
+объектов, описана в программе main() (файл T_Infer.c). При чте-
+нии из файла <>.res в цикле for(i=0, i<80) выполняется формиро-
+вание строки, содержащей имя объекта, и проверка каждого считы-
+ваемого символа, т.е. проверка того, что имя каждого объекта
+должно содержать буквы, цифры и символ подчеркивания. Затем об-
+ращением к функции malloc резервируется память для нового эле-
+мента списка объектов результата и имени самого объекта; форми-
+руется новый элемент списка. В поле еlem записывается адрес
+строки, содержащей имя объекта, а в поле next записывается адрес-
+ный ноль (NULL), так как новый элемент добавляется в конец спис-
+ка.
+
+/* Res_Strc.c                 IBM            17.10.97
+CADSHELL complex
+*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "expert.h"
+
+char Res_Strc(fn)
+   char *fn;
+{
+                 FILE *pf;
+          extern FILE *prtcl;
+          extern char debug, DEBG[], EMPT[];
+   extern struct LIST *res;  /* T_Infer.c  */
+          struct LIST *r, *curr_r;
+                 char str[80], *n, s, i;
+
+  printf("\nRes_Strc: (%s).",fn);
+  strcpy(str,fn);
+  strcat(str,".res");
+  if (( pf = fopen(str,"r")) == NULL)
+     {  printf("\nFile of the result structure list \"%s\" isn't open");
+        getch();
+        return 1;
+     }
+  printf("   Processing of \"%s\"", str);
+  res = curr_r = NULL;
+  while (1)
+    {
+      if (feof(pf)) break;
+      for (i=0; i<80; )
+        {
+          s = fgetc(pf);
+          if ((s>='A' && s<='Z') ||
+              (s>='a' && s<='z') ||
+              (s>='А' && s<='Я') ||
+              (s>='а' && s<='я') ||
+              (s>='0' && s<='9') ||
+               s == '_')
+                {      str[i++] = s;
+               /*  printf("\n --(%c) str[%d]=%c", s, i-1, str[i-1]);*/}
+            else break;
+        }
+      if (!i) continue;
+      str[i] = '\0';
+      r = (struct LIST *) malloc (sizeof (struct LIST) );
+      n = malloc (strlen(str) + 1);
+      strcpy (n, str);
+      r->elem =  (void *) n;
+      r->next = NULL;
+      if (res)   curr_r->next = r;
+         else    res = r;
+      curr_r = r;
+    }
+  r = res;
+  printf("\nRes_Strc: stack of result, address is %X",res);
+  if (debug) fprintf(prtcl,
+         "\nRes_Strc: stack of result, address is %X",res);
+  while (r)
+    {
+      if (debug) fprintf(prtcl,
+             "\n   --< %X (%X) \"%s\" >", r, r->elem, r->elem);
+      printf("\n   --< %X (%X) \"%s\" >", r, r->elem, r->elem);
+      r = r->next;
+     }
+  fclose (pf);
+  return 0;
+}
+/* Res_Strc.c ----------------------------------------------------------- */
+
+
+          AddObj()
+          ========

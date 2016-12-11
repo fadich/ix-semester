@@ -1,0 +1,6 @@
+PRINT "Main PGM"
+GOSUB 100
+PRINT "Again in the main"
+END
+100 PRINT "We are in a SUB"
+    RETURN

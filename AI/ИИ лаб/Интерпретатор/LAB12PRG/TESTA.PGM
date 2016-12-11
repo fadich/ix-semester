@@ -1,0 +1,4 @@
+INPUT A
+INPUT "Enter B", B
+PRINT "A= ", A; "B= ", B
+PRINT "A+B=", A+B

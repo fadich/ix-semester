@@ -1,0 +1,462 @@
+
+          AddObj()
+          ========
+- добавляет объект к списку объектов. При обращении к этой функ-
+ции передается адрес последнего объекта в списке (c_obj) и имя
+добавляемого объекта (obj_name). Первоначально функция malloc()
+выделяет память для нового элемента типа структура OBJECT. Далее
+выполняется проверка. Если адрес последнего элемента списка 
+объектов имеет значение NULL, то это значит, что список пуст и
+тогда переменной obj_list (указателю на список объектов) присва-
+ивает адрес нового объекта. Если список не пуст, то адрес нового
+объекта записывается в поле next последнего элемента списка. За-
+тем функция malloc выделяет память для записи имени нового объек-
+та. Имя нового объекта записывается в поле name ( используется 
+функция strcpy). Остальным полям структуры OBJECT приписывается 
+начальное значение NULL.
+
+/* AddObj.c                   IBM                  14.09.98
+   Object addition for CADSHELL project
+*/
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "expert.h"
+
+char AddObj(c_obj, obj_name)
+     struct OBJECT **c_obj;  /* address of the last object in the list  */
+              char *obj_name;
+{
+          struct OBJECT *obj_ptr;
+   extern struct OBJECT *obj_list;
+            extern FILE *debfile;
+	    extern char debug;
+
+  obj_ptr = (struct OBJECT *) malloc(sizeof(struct OBJECT));
+  if (obj_ptr == NULL)
+    { puts("\nAddObj: No room for new object list member");
+      getch();
+      return 0;
+    }
+  if (*c_obj == NULL)   /* list is empty  */
+       obj_list = obj_ptr;
+     else
+       (*c_obj)->next = obj_ptr;
+  *c_obj = obj_ptr;  /* new object is current now  */
+  /*            */
+  if ((obj_ptr->name = malloc(strlen(obj_name)+1)) == NULL)
+      { puts("\nAddObj: No room for name of a new object");
+	getch();
+        return NULL;
+      }
+  strcpy(obj_ptr->name, obj_name);
+  if (debug == 2) fprintf(debfile,
+    "\n AddObj: object \"%s\"(%X) is added in the list",
+    obj_ptr->name, obj_ptr);
+  obj_ptr->question = NULL;
+  obj_ptr->value = NULL;
+  obj_ptr->next = NULL;
+
+  return 1;
+} /* end of PGM  */
+/* AddObj.c -----------------------------------------------------------*/
+
+
+          AddValue() 
+          ==========
+- добавляет новое значение в список возможных значений объекта.
+Аргументы: 1) адрес объекта, к которому относится добавляемое 
+значение; 2) символьная строка - имя добавляемого значения.
+Обращением к функции malloc() выделяется память для записи эле-
+мента типа структура VALUE и под имя нового значения. Заполнение 
+полей новой структуры начальными значениями. Новое значение по-
+мещается в список возможных значений объекта. Если этот список 
+пуст,то в поле value объекта записан адрес NULL, тогда адрес до-
+бавляемого значения записывается в поле value объекта. Если спи-
+сок возможных значений объекта не пуст, то находится последнее 
+значение списка и в его поле next записывается адрес добавляемо-
+го значения, тем самым новое значение добавляется в конец списка.
+AddValue() возвращает адрес добавленного значения.
+
+/* AddValue.c             IBM              27.03.95
+*/
+#include <stdlib.h>
+#include "expert.h"
+
+struct VALUE *
+   AddValue (curr_obj, v_name)
+     struct OBJECT *curr_obj;
+              char *v_name;
+{
+     struct VALUE *v_ptr, *v;
+
+  v_ptr = (struct VALUE *) malloc (sizeof (struct VALUE) );
+  v_ptr->name = malloc (strlen (v_name) + 1);
+  v_ptr->cert = 0;
+  v_ptr->prem = NULL;
+  v_ptr->con = NULL;
+  strcpy (v_ptr->name, v_name);
+  v_ptr->next = NULL;
+  if (curr_obj->value == NULL)
+        curr_obj->value = v_ptr;
+     else
+        {
+          v = curr_obj->value;
+          while (v->next)
+              v = v->next;
+          v->next = v_ptr;
+        }
+  return (v_ptr);
+}
+/* AddValue.c -----------------------------------------------------------*/
+
+
+          AddQuest()
+          ==========
+- приписывает объекту вопрос. Аргументы: 1) адрес объекта, кото-
+рому приписывается вопрос; 2) текст вопроса. Функция malloc()
+выделяет память для записи текста вопроса. Затем - strcopy запи-
+сывает текст вопроса в соответствующее поле объекта.
+
+/* AddQuest.c              IBM            27.03.95
+   CADSHELL complex
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include "expert.h"
+
+char AddQuest (curr_obj, quest)
+     struct OBJECT *curr_obj;
+              char *quest;
+{
+  curr_obj->question = malloc (strlen (quest) + 1);
+  if (curr_obj->question == NULL)
+     return 0;
+  strcpy (curr_obj->question, quest);
+
+  return 1;
+}
+/* AddQuest.c ------------------------------------------------------------ */
+
+
+          FindObj()
+          =========
+- поиск объекта в списке объектов. Аргументы: 1) символьное имя 
+искомого объекта; 2) адрес объекта. Значением переменной Obj_list 
+является адрес первого элемента списка. Просматривается список 
+объектов и сравнивается имя каждого объекта из списка с именем
+искомого. Если такой объект найден, то 2-й аргумент возвращает 
+его адрес, а сама функция возвращает - 1. Если объект не найден,
+то функция возвращает - 0, а 2-й аргумент  возвращает адрес по-
+следнего элемента списка объектов.
+
+/* FindObj.c               IBM             25.10.97
+*/
+#include <stdio.h>
+#include "expert.h"
+
+char FindObj (name_obj,obj_ptr)
+           char *name_obj;
+  struct OBJECT **obj_ptr;
+{
+ extern struct OBJECT  *obj_list;
+          extern FILE  *debfile;
+          extern char  debug;
+
+ *obj_ptr = obj_list;
+ while (*obj_ptr != NULL)
+   {
+     if (!strcmp (name_obj,(*obj_ptr)->name))
+       {
+	if (debug == 2) fprintf(debfile,
+	   "\n FindObj: object \"%s\"(%X) is present in the list",
+	    (*obj_ptr)->name, *obj_ptr);
+        return 1; /* object is present and its address is returned */
+       }
+     if ((*obj_ptr)->next == NULL)
+       {
+        if (debug == 2) fprintf(debfile,
+           "\n FindObj: object \"%s\" is absent in the list",
+            *obj_ptr);
+        return 0;  /* object is absent and it returns the address
+                      of the last object in the list   */
+      }
+     *obj_ptr = (*obj_ptr)->next;
+   }
+  return 0; /* the object list is empty and it returns NULL-address */
+}
+/* FindObj.c ------------------------------------------------------------- */
+
+
+          FindValue()
+          ===========
+- поиск значения в списке разрешенных значений объекта. Аргумен-
+ты: 1) адрес объекта, для которого определяется значение; 2) имя
+искомого значения. Выполняется прямой поиск по списку значений 
+данного объекта. Если значение найдено, то возвращается адрес 
+этого значения. Если значения нет в списке, то возвращается ад-
+рес NULL.
+
+/*  FindValue.c                  IBM             27.03.95
+    CADSHELL complex
+*/
+#include "expert.h"
+
+struct VALUE *
+     FindValue (obj_ptr, v_name)
+     struct OBJECT *obj_ptr;
+              char *v_name;
+{
+     struct VALUE *val_ptr;
+
+  val_ptr = obj_ptr->value;
+  while (val_ptr )
+    if (!strcmp(v_name, val_ptr->name))
+          break;  /* The value is present, it returns value address */
+      else
+          val_ptr = val_ptr->next;
+              /* If the value is absent, then it returns NULL-address */
+  return (val_ptr);
+}
+/* FindValue.c ------------------------------------------------------------ */
+
+
+          AddRule()
+          =========
+- добавление нового правила в список правил. Аргументы: 1) номер
+правила; 2) коэффициент надежности правила. Эта функция исполь-
+зуется только при формировании базы знаний в оперативной памяти
+(при выполнении функции TextRule). Предполагается, что в файле с 
+расширением <>.rul нет правил, имеющих один и тот же номер.
+Значение глобальной переменной rule_list указывает на первый эле-
+мент списка правил. Функция malloc() выделяет память для записи
+элемента типа структура RULE. Если список правил пуст, т.е. дан-
+ное правило является первым, то в этом случае значением перемен-
+ной rule_list является NULL, тогда переменной rule_list присваи-
+вается значение - адрес нового правила. Если список не пуст, то 
+определяется последнее правило списка и в поле next его записыва-
+ется адрес добавляемого правила (запись в конец списка). Затем
+всем полям нового элемента структуры RULE присваиваются началь-
+ные значения и функция возвращает адрес добавленного правила.
+
+/* AddRule.c                IBM                   20.10.97
+   Rule addition for CADSHELL complex
+*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "expert.h"
+
+struct RULE *
+      AddRule(nmb,r_cert)
+ int nmb,
+     r_cert;
+ {
+  extern struct RULE *rule_list;
+         struct RULE *rule_ptr,
+                     *curr_rule;
+  extern struct PREM *prem_ptr;
+  extern struct CON  *con_ptr;
+                int  numb,
+                     cert;
+
+  rule_ptr = (struct RULE*) malloc (sizeof (struct RULE) );
+  curr_rule = rule_list;
+  if(rule_list == NULL)
+       rule_list = rule_ptr;
+    else
+       while (1)
+         {
+           if (curr_rule->next == NULL)
+              {
+                curr_rule->next = rule_ptr;
+                break;
+              }
+           curr_rule = curr_rule->next;
+         }
+  rule_ptr->numb = nmb;
+  rule_ptr->cert = r_cert;
+  rule_ptr->used = 0 ;
+  rule_ptr->prem = NULL;
+  rule_ptr->con  = NULL;
+  rule_ptr->next = NULL;
+
+  return rule_ptr;
+ }
+ /*End of AddRule  */
+/* --------------------------------------------------------------------- */
+
+
+          AddPrem()
+          =========
+- добавляет предпосылку в список предпосылок правила. Аргументы:
+1) адрес правила, в которое добавляется предпосылка; 2) имя 
+объекта предпосылки; 3) имя значения предпосылки. Функция malloc 
+выделяет память под элемент типа структура PREM для записи новой
+предпосылки правила. Функция  FindObj ищет объект предпосылки в 
+списке объектов. Если такого объекта в списке нет, то функция 
+AddObj добавляет его в список. Адрес объекта предпосылки записы-
+вается в поле оbj предпосылки. Аналогично осуществляется поиск 
+значения предпосылки в списке разрешенных значений объекта пред-
+посылки. Полученный адрес значения записывается в поле value до-
+бавляемой предпосылки. Функция AddInList (добавление в список) 
+заносит адрес текущего правила в список поля prem значения пред-
+посылки. Затем данная предпосылка добавляется в список предпосы-
+лок правила. Если список пуст, т.е. в поле prem правила  записан 
+NULL, то адрес добавляемой предпосылки записывается в поле prem 
+правила. Если список предпосылок не пуст, то осуществляется 
+поиск последней предпосылки правила и новая предпосылка добавля-
+ется в конец списка.
+
+/*AddPrem.c                      IBM                   20.10.97
+ */
+#include <stdio.h>
+#include <string.h>
+#include "expert.h"
+
+void AddPrem(curr_rule, pr_obj, pr_val)
+    struct RULE *curr_rule;
+           char *pr_obj,
+                *pr_val;
+{
+      extern FILE *debfile;
+      extern char debug;
+      struct PREM *prem_ptr, *curr_prem;
+    struct OBJECT *c_obj;
+     struct VALUE *c_val;
+
+if (debug == 2) fprintf(debfile,
+    "\nAddPrem: rule=(%d)%X, obj=%s, val=%s",
+         curr_rule->numb, curr_rule, pr_obj, pr_val);
+  prem_ptr = (struct PREM *) malloc (sizeof (struct PREM));
+  if ( ! FindObj(pr_obj, &c_obj) ) AddObj(&c_obj, pr_obj);
+  prem_ptr->obj = c_obj;
+  c_val = (struct VALUE *) FindValue(c_obj, pr_val);
+  if ( ! c_val)
+         c_val = (struct VALUE *) AddValue (c_obj, pr_val);
+  prem_ptr->value = c_val;
+  AddInList(&c_val->prem, curr_rule);
+  prem_ptr->next = NULL;
+  if (curr_rule->prem == NULL)
+        curr_rule->prem = prem_ptr;
+     else
+        {
+          curr_prem = curr_rule->prem;
+          while (curr_prem->next )
+             curr_prem = curr_prem->next;
+          curr_prem->next = prem_ptr;
+        }
+if (debug == 2) fprintf(debfile,
+   "\nAddPrem: prem=%X, obj=(%s)%X, val=(%s)%X", prem_ptr,
+     c_obj->name, c_obj, c_val->name,c_val);
+    return;
+}
+/* AddPrem ----------------------------------------------------------- */
+
+          AddCon()
+          ========
+- добавляет заключение в список заключений правила. Полностью
+аналогична функции AddPrem, только вместо расширения prem исполь-
+зуется расширение con. Аргументы: 1) адрес правила, в которое 
+добавляется заключение; 2) имя объекта заключения; 3) имя значе-
+ния заключения; 4) значение коэффициента уверенности.
+
+/*  AddCon.c                   IBM          20.10.97
+  CADSHELL complex
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include "expert.h"
+
+void AddCon (curr_rule, n_obj, n_val, c_cert)
+     struct RULE *curr_rule;
+            char *n_obj,
+                 *n_val;
+             int  c_cert;
+{
+       extern FILE *debfile;
+       extern char debug;
+        struct CON *con_ptr, *curr_con;
+     struct OBJECT *p_obj;
+      struct VALUE *p_val;
+
+ if (debug == 2)
+   fprintf(debfile,
+    "\nAddCon: rule=(%d)%X, obj=%s, val=%s, cert=%d",
+       curr_rule->numb, curr_rule, n_obj, n_val, c_cert);
+con_ptr = (struct CON *) malloc (sizeof(struct CON) );
+if ( ! FindObj(n_obj, &p_obj) ) AddObj(&p_obj, n_obj);
+con_ptr->obj = p_obj;
+p_val = (struct VALUE *) FindValue (p_obj, n_val);
+if ( ! p_val)
+       p_val = (struct VALUE *) AddValue (p_obj, n_val);
+con_ptr->value = p_val;
+AddInList(&p_val->con, curr_rule);
+con_ptr->cert = c_cert;
+con_ptr->next = NULL;
+if (curr_rule->con == NULL)
+      curr_rule->con = con_ptr;
+   else
+      {
+        curr_con = curr_rule->con;
+        while (curr_con->next )
+            curr_con = curr_con->next;
+        curr_con->next = con_ptr;
+      }
+if (debug == 2) fprintf(debfile,
+   "\nAddCon: con=%X, obj=(%s)%X, val=(%s)%X", con_ptr,
+      p_obj->name, p_obj, p_val->name, p_val);
+  return;
+}
+/* AddCon ------------------------------------------------------------- */
+
+
+          AddInList()
+          ===========
+- добавляет элемент в список. Используется в функциях AddPrem() 
+и AddCon() для формирования списков правил, присоединяемых к по-
+лям prem и con структуры VALUE. Аргументы: 1) адрес списка, в
+который добавляется новый элемент; 2) адрес правила, которое до-
+бавляется в список. Функция malloc резервирует память для нового 
+элемента списка. Затем в поле elem записывается адрес добавляе-
+мого правила, а в поле next - NULL. После чего новый элемент по-
+мещается в конец списка.
+
+/* AddInList.c                 IBM              27.03.95
+ CADSHELL complex
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void  AddInList (l, r)
+      struct LIST  **l;
+      struct RULE  *r;
+{
+   struct LIST  *curr, *el;
+
+  el = (struct LIST *) malloc (sizeof(struct LIST) );
+  el->elem = (void *) r;
+  el->next = NULL;
+  if (*l)   /* List isn't empty  */
+     {
+       curr = *l;
+       while (1)
+         if ( ! curr->next)
+            {
+               curr->next = el;
+               return;
+            }
+            else
+                curr = curr->next;
+     }
+    else
+        *l = el;
+  return;
+}
+/* AddInList.c -----------------------------------------------------*/
+
+Функции RuleFree() и ObjFree() освобождают память, выделенную
+функцией malloc() для хранения объектов и правил в оперативной
+памяти ( списки структур OBJECT, VALUE, RULE, PREM, CON, LIST.
+

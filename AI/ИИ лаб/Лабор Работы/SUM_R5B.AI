@@ -1,0 +1,629 @@
+          Добавление эвристики
+
+     Процедуры поиска вглубину и в ширину - "слепые". Они ищут
+решение, полагаясь исключительно на перемещение от одного узла к
+другому без использования каких-либо предположений, полученных
+на основе обучения. Первые два метода могут подходить для неко-
+торых управляемых ситуаций, где программист располагает информа-
+цией, которая говорит, что необходимо использовать один метод
+или другой. Но программа ИИ требует поисковую процедуру, осно-
+ванную на некотором усреднении этих двух методов. Единственный
+способ достичь такого поиска состоит в добавлении способностей
+учитывать предыдущий опыт.
+     Эвристики - это просто правила, которые позволяют сокращать
+поиск, указывая наиболее вероятно правильное направление. 
+     Можно легко включить эвристическую информацию в программы,
+разрабатываемые для определенных применений, но невозможно сде-
+лать обобщеный эвристический поиск.
+     Наиболее часто, эвристические методы поиска основаны на мак-
+симизировании или минимизировании некоторого аспекта задачи. Фак-
+тически, два эвристических подхода, которые далее рассматривают-
+ся, используют противоположные эвристики и выдают различные ре-
+зультаты. Оба этих подхода основаны на процедуре поиска вглубину.
+
+       Метод поиска "восхождением на холм"
+
+     В задаче планирования полета из Нью-Йорка  в  Лос-Анджелес,
+имеются два возможных ограничения,  которые пассажир захочет ми-
+нимизировать. Первое - число необходимых пересадок. Второе -
+длина маршрута. Причем, самый короткий маршрут не обязательно
+подразумевает наименьшее количество  пересадок. Алгоритм поиска,
+пытающийся найти решение, которое минимизирует число пересадок,
+будет использовать эвристику, которая заявляет, что чем большее
+расстояние покрывается, тем выше вероятность того, что Вы пере-
+меститесь ближе к месту назначения и, таким образом, сокращается
+число пересадок. В ИИ, этот тип метода поиска называется "вос-
+хождение на холм".
+     Формально, алгоритм "восхождения на холм", выбирает в каче-
+стве следующего шага узел, который, кажется, что размещен наибо-
+лее близко к цели. Алгоритм получил название из аналогии с путе-
+шественником, который потерялся в темноте, на полпути к вершине
+горы. Если Вы предполагаете, что лагерь туристов находится навер-
+ху горы, то, даже в темноте, путешественник знает, что каждый
+шаг, который он сделает вверх - это шаг в правильном направлении!
+     Для задачи о авиа-рейсах можно включить в программу следую-
+щую эвристику для алгоритма "восхождения на холм": выберите смеж-
+ный рейс, место назначения которого является насколько возможно
+дальше от вашего текущего положения, в надежде, что это будет
+ближе к конечной цели. Чтобы сделать это, необходимо внести из-
+менения в процедуру find(). Теперь процедура find() осуществля-
+ет поиск в базе данных самого протяженного рейса от заданного
+города.
+     Для контрольного примера эта программа получит решение:
+
+   New York to Denver to Los Angeles
+   distance is 2900
+
+     Этот результат весьма хорош!  Маршрут имеет минимальное чис-
+ло остановок на пути - только одну и весьма близкую к минималь-
+ной протяженность. Кроме того, программа не тратит впустую время
+или усилия на обширный возврат.
+     Однако, если связь Денвер -- Лос-Анджелес не существует, то
+поиск не будет характеризоваться хорошим результатом. Фактически,
+решение было бы: Нью-Йорк - Денвер - Хьюстон - Лос-Анджелес, кото-
+рое имеет протяженность 4900 миль! Это решение предполагает вос-
+хождение на ложный холм, потому что перелет в Хьюстон не прибли-
+жает к цели - Лос-Анджесу. Рисунок 11.7 иллюстрирует решение и
+ложный путь на холм.
+     Во многих случаях поиск по методу "восхождения на холм" до-
+вольно хорош, потому что он может уменьшать число узлов, через
+которые необходимо пройти в процессе получения решения. Однако,
+он может потерпеть неудачу из-за наличия трех следующих недостат-
+ков. Во-первых, - это существование ложных холмов, как показано
+на примере. Во-вторых, - это возможное наличие "плато", на кото-
+ром все последующие шаги на первый взгляд одинаково хороши (или
+плохи). В этом случае поиск "восхождением на холм" не лучше, чем
+
+<< Рис.11.7 Путь к решению и ложная вершина.>>
+
+поиск вглубину. Третья проблема - наличие "горных хребтов". В
+этом случае алгоритм поиска "восхождением на холм" не эффективен,
+потому что он пересечет горный хребет несколько раз в процессе
+возвратов.
+     Несмотря на эти потенциальные неприятности, поиск "восхож-
+дением на холм" в основном ведет к оптимальному решению быстрее,
+чем любой неэвристический метод.
+
+
+
+#define MAX 100
+ /* структура базы данных рейсов */
+struct FL 
+  { char  from[20];
+    char  to [20];
+     int  distance;
+    char  skip;  /* used in backtracking  */
+  };
+struct stack
+  { char  from[20];
+    char  to[20];
+     int  dist;
+};
+
+ /*  Hill-Climbing search with
+  Depth-first search                     19.11.98
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "search.h"
+
+void isflight (char *, char *);
+void route (char *);
+void setup (void);
+
+struct FL flight[MAX]; /* array of db structures */
+int f_pos=0;           /* number of entries in flight db */
+int find_pos=0;        /* index for searching flight db */
+int tos=0;             /* top of stack */
+struct stack bt_stack[MAX]; /* backtracking stack */
+
+void main()
+{
+   char from[20],to[20];
+
+   setup();
+   printf ("from? ");
+   gets (from);
+   printf("to? ");
+   gets (to);
+   isflight (from, to);
+   route (to);
+   getch();
+   return;
+}
+
+/* place facts into flight db        19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+ void assert_flight (from, to, dist)
+	       char  *from, *to;
+		int  dist;
+{
+       extern int  f_pos;
+ extern struct FL  flight[];
+
+  if (f_pos < MAX)
+  {
+     strcpy (flight[f_pos].from, from);
+     strcpy (flight[f_pos].to, to);
+     flight[f_pos].distance = dist;
+     flight[f_pos].skip = 0;
+     f_pos++;
+  }
+  else printf("Flight database full.\n");
+  return;
+}
+/* given from, find anywhere farthest away      19.11.98
+Hill-Climbing Search
+*/
+#include <string.h>
+#include "search.h"
+
+int find (from, anywhere)
+    char *from, *anywhere;
+{
+extern struct FL  flight[];
+      extern int  find_pos, f_pos;
+             int  pos, dist;
+
+   pos = dist = 0;
+   find_pos = 0;
+   while (find_pos < f_pos)
+     {
+      if (!strcmp (flight[find_pos].from,from) &&
+	  !flight[find_pos].skip)
+        {
+          if (flight[find_pos].distance > dist)
+            { pos = find_pos;
+              dist = flight[find_pos].distance;
+            }
+        } 
+      find_pos++;
+     } 
+   if (pos)
+     {
+       strcpy (anywhere, flight[pos].to);
+       flight[pos].skip = 1;  /* make active */
+       return  flight[pos].distance;
+     }
+   return 0;
+}
+
+/* determine if there is a route          19.11.98
+   between from and to */
+
+void isflight (from,to)
+    char *from,*to;
+{
+       int  d,dist;
+      char  anywhere[20];
+extern int  tos;
+
+  /* see if destination is reached */
+  d= match(from,to);
+  if (d)
+   {
+     push (from, to ,d);
+     return;
+   }
+  /* try another connection */
+  dist = find(from,anywhere);
+  if (dist)
+    {
+     push (from,to,dist);
+     isflight (anywhere,to);
+    }
+    else 
+      if (tos > 0)
+       { /*backtrack*/
+         pop (from,to,&dist);
+         isflight (from,to);
+       }
+  return;
+}
+/* if connection between from and to,          16.11.98
+   then return the distance of flight; 
+   if not, return 0 */
+#include <string.h>
+#include "search.h"
+
+ int match (from,to)
+     char *from, *to;
+{
+    register int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for (t=f_pos-1; t>-1; t--)
+    if(!strcmp(flight[t].from,from)&&
+       !strcmp(flight[t].to,to))  return flight[t].distance;
+  return 0; /* not found */
+}
+
+/*                                   19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+void pop (from,to,dist)
+    char  *from, *to;
+     int  *dist;
+{
+	 extern int  tos;
+extern struct stack  bt_stack[];
+
+  if(tos > 0)
+    {
+      tos--;
+      strcpy(from,bt_stack[tos].from);
+      strcpy(to,bt_stack[tos].to);
+      *dist=bt_stack[tos].dist;
+    }
+   else printf("Stack underflow.\n");
+}
+/* stack routness                19.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void push (from,to,dist)
+      char  *from, *to;
+       int  dist;
+{
+extern struct stack  bt_stack[];
+extern int  tos;
+
+   if (tos < MAX)
+   {
+     strcpy(bt_stack[tos].from,from);
+     strcpy(bt_stack[tos].to,to);
+     bt_stack[tos].dist=dist;
+     tos++;
+   }
+    else  printf("Stack full.\n");
+   return;
+}
+
+/*  found the route and distance             19.11.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+void route (to)
+    char *to;
+{
+                int  dist,t;
+extern struct stack  bt_stack[];
+         extern int  tos;
+
+  t=0;
+  dist=0;
+  while (t<tos)  
+    {
+      printf("%s to ", bt_stack[t].from);
+      dist += bt_stack[t].dist;
+      t++;
+    }
+  printf("%s\n",to);
+  printf("distance is %d\n",dist);
+  return;
+}
+void setup()
+{
+  assert_flight("New York","Chicago",1000);
+  assert_flight("Chicago","Denver",1000);
+  assert_flight("New York","Toronto",800);
+  assert_flight("New York","Denver",1900);
+  assert_flight("Toronto","Calgary",1500);
+  assert_flight("Toronto","Los Angeles",1800);
+  assert_flight("Toronto","Chicago",500);
+  assert_flight("Denver","Urbana",1000);
+  assert_flight("Denver","Houston",1500);
+  assert_flight("Houston","Los Angeles",1500);
+  assert_flight("Denver","Los Angeles",1000);
+  return;
+}
+
+
+            Поиск по минимальной стоимости
+
+     Противоположностью "восхождению на холм" является поиск по
+минимальной стоимости. Эта стратегия подобна той ситуации, когда
+находясь на середине улицы на большом холме вы одеваете ролико-
+вые коньки, и у вас определенно есть ощущение, что намного легче
+ехать вниз, чем подниматься наверх! Таким образом, поиск по мини-
+мальной стоимости выберет путь, предполагающий наименьшее коли-
+чество усилий.
+     Применительно к задаче об авиарейсах поиск по минимальной
+стоимости подразумевает, что программа будет брать самый корот-
+кий рейс во всех случаях так, чтобы найденный маршрут имел хоро-
+ший шанс быть самым коротким. В отличие от поиска "восхождением
+на холм", который минимизирует, число пересадок, поиск по мини-
+мальной стоимости минимизирует протяженность маршрута.
+     Для реализации поиска по минимальной стоимости необходимо
+снова изменить функцию find(). Единственное изменение в новой 
+версии find() по сравнению с версией для "восхождения на холм"
+состоит в том, что теперь она находит самый короткий путь.
+Решение получается следующим:
+
+    New York to Toronto to Los Angeles
+    distance is 2600
+
+  Это показывает, что в данном примере поиск по минимальной сто-
+имости находит самый короткий маршрут. Рис. 11.8 показывает про-
+движение по наименьшей стоимости к решению.
+
+  << Рисунок 11.8 Продвижение поиска по наименьшей стоимости 
+                  к решению. >>
+
+     Поиск по минимальной стоимости имеет те же самые преимуще-
+ства и недостатки что и "восхождение на холм". Могут встречать-
+ся ложные долины, низменности, и ущелья; но в целом, поиск по ми-
+нимальной стоимости имеет тенденцию работать довольно хорошо. 
+Однако, нельзя утверждать, что поиск по минимальной стоимости 
+вообще лучше только потому, что он работает лучше "восхождения 
+на холм" на этой специфической задаче. Здесь можно только ска-
+зать, что в среднем он выиграет у "слепого" поиска.
+#define MAX 100
+ /* структура базы данных рейсов */
+struct FL 
+  { char  from[20];
+    char  to [20];
+     int  distance;
+    char  skip;  /* used in backtracking  */
+  };
+struct stack
+  { char  from[20];
+    char  to[20];
+     int  dist;
+};
+====================
+ ============================
+/* Least-Cost Search  with
+  Depth-first search                     19.11.98
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "search.h"
+
+void isflight (char *, char *);
+void route (char *);
+void setup (void);
+
+struct FL flight[MAX]; /* array of db structures */
+int f_pos=0;           /* number of entries in flight db */
+int find_pos=0;        /* index for searching flight db */
+int tos=0;             /* top of stack */
+struct stack bt_stack[MAX]; /* backtracking stack */
+
+void main()
+{
+   char from[20],to[20];
+
+   setup();
+   printf ("from? ");
+   gets (from);
+   printf("to? ");
+   gets (to);
+   isflight (from, to);
+   route (to);
+   getch();
+   return;
+}
+==============================
+/* place facts into flight db        19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+ void assert_flight (from, to, dist)
+	       char  *from, *to;
+		int  dist;
+{
+       extern int  f_pos;
+ extern struct FL  flight[];
+
+  if (f_pos < MAX)
+  {
+     strcpy (flight[f_pos].from, from);
+     strcpy (flight[f_pos].to, to);
+     flight[f_pos].distance = dist;
+     flight[f_pos].skip = 0;
+     f_pos++;
+  }
+  else printf("Flight database full.\n");
+  return;
+}
+======================
+/* find closest anywhere                 19.11.98
+Least-Cost Search Technique
+*/
+#include <string.h>
+#include "search.h"
+
+int find (from, anywhere)
+    char *from, *anywhere;
+{
+extern struct FL  flight[];
+      extern int  find_pos, f_pos;
+             int  pos, dist;
+
+   pos = 0;
+   dist = 32000; /* larger than the longest route */
+   find_pos = 0;
+   while (find_pos < f_pos)
+     {
+      if (!strcmp (flight[find_pos].from,from) &&
+	  !flight[find_pos].skip)
+        {
+          if (flight[find_pos].distance < dist)
+            { pos = find_pos;
+              dist = flight[find_pos].distance;
+            }
+        } 
+      find_pos++;
+     } 
+   if (pos)
+     {
+       strcpy (anywhere, flight[pos].to);
+       flight[pos].skip = 1;  /* make active */
+       return  flight[pos].distance;
+     }
+   return 0;
+}
+================================
+/* determine if there is a route          19.11.98
+   between from and to */
+
+void isflight (from,to)
+    char *from,*to;
+{
+       int  d,dist;
+      char  anywhere[20];
+extern int  tos;
+
+  /* see if destination is reached */
+  d= match(from,to);
+  if (d)
+   {
+     push (from, to ,d);
+     return;
+   }
+  /* try another connection */
+  dist = find(from,anywhere);
+  if (dist)
+    {
+     push (from,to,dist);
+     isflight (anywhere,to);
+    }
+    else 
+      if (tos > 0)
+       { /*backtrack*/
+         pop (from,to,&dist);
+         isflight (from,to);
+       }
+  return;
+}
+=========================
+/* if connection between from and to,          16.11.98
+   then return the distance of flight; 
+   if not, return 0 */
+#include <string.h>
+#include "search.h"
+
+ int match (from,to)
+     char *from, *to;
+{
+    register int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for (t=f_pos-1; t>-1; t--)
+    if(!strcmp(flight[t].from,from)&&
+       !strcmp(flight[t].to,to))  return flight[t].distance;
+  return 0; /* not found */
+}
+======================
+/*                                   19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+void pop (from,to,dist)
+    char  *from, *to;
+     int  *dist;
+{
+	 extern int  tos;
+extern struct stack  bt_stack[];
+
+  if(tos > 0)
+    {
+      tos--;
+      strcpy(from,bt_stack[tos].from);
+      strcpy(to,bt_stack[tos].to);
+      *dist=bt_stack[tos].dist;
+    }
+   else printf("Stack underflow.\n");
+}
+/* stack routness                19.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void push (from,to,dist)
+      char  *from, *to;
+       int  dist;
+{
+extern struct stack  bt_stack[];
+extern int  tos;
+
+   if (tos < MAX)
+   {
+     strcpy(bt_stack[tos].from,from);
+     strcpy(bt_stack[tos].to,to);
+     bt_stack[tos].dist=dist;
+     tos++;
+   }
+    else  printf("Stack full.\n");
+   return;
+}
+
+===========================
+/*  found the route and distance             19.11.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+void route (to)
+    char *to;
+{
+                int  dist,t;
+extern struct stack  bt_stack[];
+         extern int  tos;
+
+  t=0;
+  dist=0;
+  while (t<tos)  
+    {
+      printf("%s to ", bt_stack[t].from);
+      dist += bt_stack[t].dist;
+      t++;
+    }
+  printf("%s\n",to);
+  printf("distance is %d\n",dist);
+  return;
+}
+
+                 Выбор метода поиска
+
+     Эвристические методы имеют тенденцию работать лучше, чем 
+"слепой" поиск. Однако, не всегда возможно использовать эвристи-
+ческий поиск, потому что можно не располагать достаточной инфор-
+мацией, позволяющей определить следующий узел, наиболее вероятно 
+приближающий к цели. Поэтому задачи можно разделить на две кате-
+гории: 1) которые могут использовать эвристический поиск, 2) ко-
+торые не могут.
+     Если при решении задачи нельзя применить эвристику, то луч-
+выбрать поиск вглубину, потому что он будет работать в основном
+лучше. Единственное исключение из этого правила - это ситуация,
+когда известно, что поиск в ширину будет работать лучше.
+     Выбор между "восхождением на холм" и поиском по минимальной
+стоимости зависит от налагаемых ограничений. Поиск "восхождением
+на холм" вырабатывает решение с наименьшим числом промежуточных
+узлов, а поиск по минимальной стоимости находит путь, который 
+требует наименьших усилий.
+     Если необходимо получать почти оптимальное решение, но нет 
+возможности применить исчерпывающий поиск (полный перебор), то 
+следует попробовать каждую из технологий поиска и далее исполь-
+зовать наиболее подходящую. Это правило эффективно, потому что 
+работа различных видов поиска существенно различна на различных
+задачах.
+

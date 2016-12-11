@@ -1,0 +1,26 @@
+(L)earn, (D)isplay, or (Q)uit? L
+
+Enter an exampl. subject: men's shoes
+  verb: not has
+ object: kabluk
+
+Enter a near-miss (NL to skip). subject: men's shoes
+  verb: has
+ object: kabluk
+
+Enter an exampl. subject: men's shoes
+  verb: has
+ object: black color
+
+Enter a near-miss (NL to skip). subject: men's shoes
+  verb: not has
+ object: black color
+
+Enter an exampl. subject: <NL>
+
+(L)earn, (D)isplay, or (Q)uit? D
+
+Display of description:
+-----------------------
+ May have :
+ men's shoes not has kabluk

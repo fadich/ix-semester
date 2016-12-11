@@ -1,0 +1,29 @@
+/* schildt.dfn             IBM 386        24.02.95
+*/
+#define NUM_LAB  100
+#define LAB_LEN  10
+#define FOR_NEST 25
+#define SUB_NEST 25
+#define PROG_SIZE 10000
+
+#define DELIMITER   1
+#define VARIABLE    2
+#define NUMBER      3
+#define COMMAND     4
+#define STRING      5
+#define QUOTE       6
+
+#define PRINT   1
+#define INPUT   2
+#define IF      3
+#define THEN    4
+#define FOR     5
+#define NEXT    6
+#define TO      7
+#define GOTO    8
+#define EOL     9
+#define FINISHED 10
+#define GOSUB   11
+#define RETURN  12
+#define END     13
+

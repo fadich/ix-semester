@@ -1,0 +1,18 @@
+PRINT "This is a program for all commandes"
+FOR X = 1 TO 4
+PRINT X, X/2; X, X*X
+NEXT
+GOSUB 300
+PRINT "Hello guy! We are in the main again."
+INPUT H
+IF H<11 THEN GOTO 200
+PRINT 12-4/2
+200 A = 100/2
+IF A>10 THEN PRINT "A>10"
+PRINT A
+INPUT "Enter H", H
+PRINT "H= ", H
+PRINT "That is all folk!"
+END
+300 PRINT "This is subprogram"
+RETURN

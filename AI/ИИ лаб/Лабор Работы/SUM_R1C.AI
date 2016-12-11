@@ -1,0 +1,656 @@
+
+          BackWard()
+          ==========
+     Главная функция машины вывода. Первоначально делается зап-
+рос на ввод цели консультации. Если объекта, являющегося целью, 
+нет в списке объектов, то он добавляется в список. Затем цель
+заносится в стек целей (оператор InStack(goal)). Переменная goal
+содержит адрес текущей цели. Функция BackWard() реализует обрат-
+ную цепочку вывода. Процедура вывода осуществляется в цикле
+while(goal). Цикл while(goal) завершается, когда стек целей ста-
+новится пуст, в этом случае переменная goal принимает значение
+NULL. При пошаговом выполнении цикла (step = 1) происходит обра-
+щение к функции SeeStack(), которая выводит на экран содержимое 
+стека цели, и здесь в этом режиме существует возможность выхода 
+по клавише Esc в случае зацикливания. Пошаговый режим полезен 
+при изучении пакета и при отладке базы знаний. Переменная val_ptr
+содержит адрес текущего значения из списка разрешенных значений
+объекта goal, являющегося текущей целью. Переменная val_cf содер-
+жит значение коэффициента уверенности для факта goal = val_ptr.
+В цикле while(val_ptr) просматривается список разрешенных значе-
+ний объекта goal и определяется максимальное значение коэффици-
+ента уверенности. Оператор if(val_cf<100) проверяет условие. Если
+val_cf=100, то в рабочей области существует факт goal = val_ptr
+c коэффициентом уверенности 100 (полностью достоверный). Тогда
+функция OutStack() удаляет текущую цель из стека и в переменную
+goal записывает адрес объекта из стека, который становится теку-
+щей целью. Если val_cf<100, первоначально обращением к функции
+FindRule() определяется правило, среди заключений которого есть
+пара goal=значение. Если такое правило найдено, то FindRule()
+возвращает адрес этого правила, который присваивается переменной
+curr_rule (адрес текущего правила), если правило не найдено, то
+FindRule() возвращает NULL. Если правило найдено (curr_rull не
+NULL), то обращением к функции TestRull() осуществляется провер-
+ка всех предпосылок правила. Если все предпосылки правила выпол-
+няются, то rul_cf (интегрированное значение коэффицента уверен-
+ности предпосылок и надежности правила) больше 0, выполняется
+обращение к функции Conclude(), которая выводит заключение и по-
+мечает правило как сработавшее. Если не все предпосылки правила
+выполняются, то rul_cf=0 и TestRule() в переменную goal заносит
+адрес объекта, являющегося новой текущей целью, а InStack()
+вносит этот объект в стек целей. Если функция FindRule() не наш-
+ла подходящего правила, то переменная curr_rule принимает значе-
+ние NULL. Если val_cf, при этом равна 0, то в базе знаний нет 
+правила, позволяющего объекту goal приписать какое-либо значение,
+в этом случае обращением к функции Ask() делается запрос пользо-
+вателю на ввод необходимого значения. Если val_cf>0, то объект
+goal входит хотя бы в один факт рабочей области и он исключается
+из стека обращением к функции InStack().
+
+/* BackWard.c                     IBM             15.10.97
+CADSHELL complex
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "expert.h"
+
+void BackWard()
+{
+    extern FILE  *prtcl;
+    extern char  step, protocol, debug,
+                 SYST[], USER[];
+  struct OBJECT  *goal;
+   struct VALUE  *val_ptr;
+    struct RULE  *curr_rule;
+           char  goal_name[40], s;
+            int  cf, val_cf, rul_cf;
+
+  cputs("\n\rEnter a goal, please:");
+  gets (goal_name);
+  if (protocol)
+     fprintf(prtcl, "\n%s Enter a goal, please.\n%s %s",
+         SYST, USER, goal_name);
+  if ( !FindObj (goal_name, &goal) )
+	AddObj(&goal, goal_name);
+  cprintf("\n\rThe goal is \"%s\" <%X>", goal->name, goal);
+  if (!goal) return;
+  InStack (goal);
+  while (goal)
+    {
+      if (step) { SeeStack();  s = getch();
+		   if (s == 27) { getch(); return; } }
+      val_ptr = goal->value;
+      val_cf = 0;
+      while (val_ptr)
+        {
+          if (val_ptr->cert > val_cf)
+              val_cf = val_ptr->cert;
+          val_ptr = val_ptr->next;
+        }
+      if ( val_cf < 100)
+        {
+	  curr_rule = (struct RULE *) FindRule (goal);
+	  if (curr_rule)
+	    {
+	      rul_cf = TestRule (curr_rule, &goal);
+          if (debug)
+             fprintf(prtcl,"\n TestRule: rul_cf=%d", rul_cf);
+	      if (rul_cf<0) continue;
+	      if (rul_cf) Conclude (curr_rule, rul_cf);
+		 else     InStack(goal);
+	    }
+	    else
+	     { if ( ! val_cf )
+		   Ask (goal);
+	       goal = (struct OBJECT *) OutStack();
+	     }
+	}
+	else
+	    goal = (struct OBJECT *) OutStack();
+    }     /*  end of while(goal)  */
+}
+/* BackWard -----------------------------------------------------------*/
+
+
+          FindRule()
+          ==========
+- поиск правила, среди заключений которого есть пара
+объект_текущая_цель=значение. Аргумент - адрес объекта, являюще-
+гося текущей целью. Внешний цикл while(v) просматривает список 
+разрешенных значений для объекта, являющегося текущей целью.
+Внутренний цикл while(l) просматривает список правил, среди зак-
+лючений которых встречается пара obj = v. Если поле used правила 
+содержит значение отличное от 0, то это значит, что либо данное 
+правило уже было использовано или оно не подходит по другим при-
+чинам, поэтому оно пропускается. Если в поле used записан 0, то 
+правило выбирается для анализа и функция возвращает его адрес.
+Если подходящего правила не было найдено, то функция FindRule() 
+возвращает NULL.
+
+/* FindRule.c                   IBM              15.10.97
+  CADSHELL complex
+*/
+#include <stdio.h>
+#include "expert.h"
+
+struct RULE *  FindRule (obj)
+       struct OBJECT  *obj;
+{
+    extern FILE  *prtcl;
+    extern char  debug;
+   struct VALUE  *v;
+    struct LIST  *l;
+    struct RULE  *r;
+
+  v = obj->value;
+  while (v)
+    {
+      l = v->con;
+      while (l)
+        {
+          r = (struct RULE *) l->elem;
+          if (r->used) l = l->next;
+            else
+	      { if (debug) fprintf(prtcl,"\n FindRule (%d)", r->numb);
+                return (r); /* the rule is not used  */
+              }
+        }
+      v = v->next;
+    }
+  if (debug) fprintf(prtcl,"\n FindRule (NULL)");
+  return (NULL);
+}
+/* FindRule.c --------------------------------------------------- */
+
+
+          TestRule()
+          ==========
+- проверяет все пары объект=значение, которые являются предпо-
+сылками правила и вычисляет интегрированное значение коэффициен-
+та уверенности. Аргументы: 1) адрес проверяемого правила; 2) ад-
+рес объекта, являющегося текущей целью. Второй аргумент переда-
+ется по адресу для того, чтобы в случае изменения текущей цели 
+ее адрес можно было бы вернуть в вызывающую программу.
+Рабочие переменные: sum_cf - суммарный (интегрированный) коэффи-
+циент уверенности; cf - коэффициент уверенности. В цикле 
+while(рr) выполняется пpоверка предпосылок. Адрес первой предпо-
+сылки записан в поле рrem проверяемого правила. В цикле while(pr)
+для каждой предпосылки определяется значение и анализируется ко-
+эффициент уверенности (cf). Если cf=0, то в рабочей области тако-
+го факта нет и проверяется наличие у данного объекта какого-либо
+другого значения, имеющего не нулевой коэффициент уверенности.
+Если такое значение есть, то отпадает надобность выполнять теку-
+щее правило. В поле used правила записывается 2. При работе в
+режиме с объяснением выполняется обращение к функции RuleFalse,
+которая используется чисто для пояснения ситуации. Если в рабо-
+чей области нет другого факта с данным объектом (среди списка
+объекта нет значений с коэффициентом уверенности отличным от 0),
+то данный объект становится текущей целью и его адрес передается
+обратно в вызывающую программу через второй аргумент, а функция
+возвращает 0. Если факт, соответствующий предпосылке есть в ра-
+бочей области (коэффициент уверенности не 0), то выполняется вы-
+числение значения sum_cf как произведения коэффициентов уверен-
+ности предпосылок и осуществляется переход к следующей предпо-
+сылке. Цикл выполняется пока не будут пересмотрены все предпо-
+сылки. Окончательное значение интегрированного коэффициента уве-
+ренности (sum_cf), определяется умножением коэффициента уверен-
+ности предпосылок на коэффициент надежности правила.
+
+/* TestRule.c                  IBM                     15.10.97
+  CADSHELL complex
+*/
+#include <stdio.h>
+#include <string.h>
+#include "expert.h"
+
+int TestRule(r, ob)
+     struct RULE *r;
+   struct OBJECT **ob;
+{
+     extern char  explan;
+     struct PREM  *pr;
+    struct VALUE  *v;
+   struct OBJECT  *o;
+             int  cf, sum_cf;
+
+  o = ob[0];
+  pr = r->prem;
+  sum_cf = 100;
+  while( pr )
+    {
+      v = pr->value;
+      cf = v->cert;
+      if (!cf)  /*   fact is false  */
+        {
+          o = pr->obj;
+          v = o->value;
+          while (v)
+            {
+              if (v->cert)
+                { r->used = 2;
+                  if (explan) RuleFalse ( r, o, v);
+                  return (-1);
+                }
+              v = v->next;
+            }
+          *ob = pr->obj;
+          return 0;
+        }
+      sum_cf *= cf;
+      sum_cf /= 100;
+      pr = pr->next;
+    }
+  sum_cf *= r->cert;
+  sum_cf /= 100;
+  r->used = 1;
+  return (sum_cf);
+}
+/* TestRule.c ---------------------------------------------------- */
+
+
+          Conclude()
+          ==========
+- факты, составляющие заключение правила, заносит в рабочую
+область. Аргументы: 1) адрес сработавшего правила; 2) интегриро-
+ванный коэффициент уверенности, полученный в TestRule() и харак-
+теризующий достоверность предпосылок и самого правила. В поле
+правила con находится адрес первого элемента списка заключений.
+В цикле while(con) просматривается весь список заключений прави-
+ла и выполняется добавление соответствующих фактов в рабочую об-
+ласть. Если значение коэффициента уверенности меньше 100, то по
+формула Шортлиффа производится пересчет коэффициента уверенности.
+В режиме получения объяснений обращением к функции ExplainHow()
+выводится пояснение, почему сработало текущее правило.
+
+/* Conclude.c                 IBM            14.09.98
+  CADSHELL complex
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void Conclude(r, rcf)
+   struct RULE *r;
+          int  rcf;
+{
+    extern char  explan, debug;
+    extern FILE  *prtcl;
+     struct CON  *con;
+   struct VALUE  *v;
+  struct OBJECT  *obj;
+            int  cf;
+
+  con = r->con;
+  while( con )
+    {  /*  Facts  addition  */
+      v = con->value;
+      obj = con->obj;
+      cf = v->cert;
+      if (cf<100)
+        cf = cf + rcf * con->cert / 100 * (100 - cf) / 100;
+      v->cert = cf;
+      if (debug) fprintf(prtcl, "\n Conclude: <%s = %s> cf=%d",
+         obj->name, v->name, cf);
+      con = con->next;
+    }
+  if (explan) ExplainHow(r);
+  return;
+}
+/* Conclude.c ----------------------------------------------------- */
+
+
+          RuleFalse()
+          ===========
+- вывод сообщения на экран (в режиме -expl) и в файл протокола
+(в режиме -prot), когда в рабочей области есть факт, противоре-
+чащий предпосылке правила.
+
+/* RuleFalse.c                    IBM            27.03.95
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void RuleFalse (r, ob, v100)
+     struct RULE  *r;
+   struct OBJECT  *ob;
+    struct VALUE  *v100;
+{
+     extern FILE  *prtcl;
+     extern char  protocol, EXPL[], EMPT[];
+    struct VALUE  *v;
+     struct PREM  *p;
+
+  printf("\n%s RULE (%d) = FALSE, because the object \"%s\"",
+            EXPL, r->numb, ob->name);
+  printf("\n%s has value \"%s\" with cf = %d", EMPT,
+         v100->name, v100->cert);
+  if (protocol)
+    {
+      fprintf(prtcl,"\n%s RULE (%d) = FALSE, because the object \"%s\"",
+              EXPL, r->numb, ob->name);
+      fprintf(prtcl,"\n%s has value \"%s\" with cf = %d", EMPT,
+              v100->name, v100->cert);
+    }
+  p = r->prem;
+  while (p)
+    {
+      if ( p->obj == ob)
+         {
+           v = p->value;
+           printf("\n%s and IF-part of this rule include the fact:\
+                   \n%s\"%s = %s\".", EMPT, EMPT, ob->name, v->name);
+           if (protocol) fprintf(prtcl,
+                 "\n%s and IF-part of this rule include the fact:\
+                  \n%s \"%s = %s\".", EMPT, EMPT, ob->name, v->name);
+           return;
+         }
+      p = p->next;
+    }
+  printf("\nRuleFalse: error");
+}
+/* RuleFalse.c ----------------------------------------------------------*/
+
+
+          Ask()
+          =====
+- функция вывода на экран вопроса пользователю для ввода значе-
+ния объекта, если не было найдено подходящего правила. Ask() вы-
+водить вопрос один из двух типов: 1) вопрос, приписанный объекту,
+если такой есть; 2) стандартный вопрос, если объекту не приписан
+специальный вопрос. После этого на экран выводится перечень воз-
+можных значений, которые может принимать объект. Выбор подходя-
+щего значения осуществляется вводом его порядкового номера. Ар-
+гументом функции Ask является объект, для которого  необходимо
+ввести значение.
+
+/* Ask.c                IBM              17.10.97
+  CADSHELL complex
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "expert.h"
+
+void Ask (ob)
+    struct OBJECT  *ob;
+{
+   extern FILE *prtcl;
+   extern char  SYST[], USER[], EMPT[], debug, protocol, explan;
+   struct VALUE *v;
+	   char strng[40], s[240];
+	    int  numb, i;
+
+  s[0] = '\0';
+/*cprintf("\n\rAsk: ob=%X  %s, ptc=%d\n", ob,SYST,protocol);
+*/if (ob->question)
+       { cprintf("\n\r%s?", ob->question);
+     if (protocol) fprintf(prtcl,"\n%s %s?", SYST, ob->question);
+       }
+     else
+       { cprintf("\n\rWhat is the value of \"%s\"?", ob->name);
+	 if (protocol)  fprintf(prtcl,
+        "\n%s What is the value of \"%s\"?", SYST, ob->name);
+       }
+  v = ob->value; i = 0;
+  if (!v)
+    { cputs(" Enter a name:");
+      if (protocol) fprintf(prtcl, "\n%s Enter a name:", SYST);
+      gets (strng);
+      if (protocol) fprintf(prtcl, "\n%s %s", USER, strng);
+      v = (struct VALUE *) AddValue(ob, strng);
+      v->cert = 100;
+      goto label;
+    }
+  while (v)
+    {
+      if (protocol) fprintf(prtcl, "\n%s%d) %s", EMPT, i, v->name);
+      cprintf("\n\r%d) %s", i++, v->name);
+      v = v->next;
+    }
+  cputs("\n\rPlease enter a corresponding number");
+  if (protocol) fprintf(prtcl,
+     "\n%sPlease enter a corresponding number", EMPT);
+  cscanf("%d", &numb);
+  if (protocol) fprintf(prtcl, "\n%s  %d", USER, numb);
+  v = ob->value;
+  for (i=0; v; i++)
+    {
+      if ( i == numb )
+        {
+          v->cert = 100;
+          break;
+        }
+      v = v->next;
+    }
+  label:
+  if (debug) fprintf(prtcl, "\n Ask: %s = %s (%d)", ob->name,
+                            v->name, v->cert);
+  if (explan) ExplainWhy (ob);
+  return;
+}
+/* Ask.c -------------------------------------------------------- */
+
+
+          ExplainHow()
+          ============
+- выводит пояснение на основании чего было сделано заключение.
+Аргументом функции является указатель на сработавшее правило.
+Пояснение имеет стандартную структуру:
+  "На основании правила (номер правила) с коэффициентом уверен-
+   ности = <число> делается заключение, что
+      < перечисляются все пары "объект = значение", состав-
+        ляющие заключение данного правила >,
+   потому что
+      < перечисляются все пары "объект = значение", состав-
+        ляющие предпосылку данного правила>."
+
+/* ExplainHow.c                 IBM             27.03.95
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void ExplainHow (r)
+    struct RULE  *r;
+{
+    extern FILE  *prtcl;
+    extern char  EXPL[], EMPT[], protocol;
+  struct OBJECT  *o;
+   struct VALUE  *v;
+    struct PREM  *p;
+     struct CON  *c;
+
+  printf("\n%s On the basis of a RULE (%d) with cf = %d",
+         EXPL, r->numb, r->cert);
+  printf("\n%s the conclusion is:",EMPT);
+  if (protocol)
+    { fprintf(prtcl, "\n%s On the basis of a RULE (%d) with cf = %d",
+          EXPL, r->numb, r->cert);
+      fprintf(prtcl, "\n%s the conclusion is:", EMPT);
+    }
+  c = r->con;
+  while (c)
+    {
+      o = c->obj;
+      v = c->value;
+      printf("\n%s %s = %s with cf = %d",EMPT,o->name,v->name,v->cert);
+      if (c->next)  printf(" and");
+             else   printf(", ");
+      if (protocol)
+        { fprintf(prtcl, "\n%s %s = %s with cf = %d",
+               EMPT, o->name, v->name, v->cert);
+          if (c->next)  fprintf(prtcl, " and");
+                 else   fprintf(prtcl, ", ");
+        }
+      c = c->next;
+    }
+  printf("\n%s because", EMPT);
+  if (protocol) fprintf(prtcl, "\n%s because", EMPT);
+  p = r->prem;
+  while (p)
+    {
+      o = p->obj;
+      v = p->value;
+      printf("\n%s %s = %s with cf = %d", EMPT,o->name,v->name,v->cert);
+      if (p->next) printf(" and");
+             else  printf(". ");
+      if (protocol)
+        { fprintf(prtcl, "\n%s %s = %s with cf = %d", EMPT,
+                o->name, v->name, v->cert);
+          if (p->next) fprintf (prtcl, " and");
+                 else  fprintf (prtcl, ". ");
+        }
+      p = p->next;
+    }
+}
+/* ExplainHow.c ----------------------------------------------------------*/
+
+
+          ExplainWhy()
+          ============
+- выводит пояснение того, почему был задан вопрос пользователю.
+Аргумент - указатель на объект, для которого требовалось опреде-
+лить значение. Пояснение имеет стандартную структуру:
+   "Не было найдено правила, приписывающего значение
+    объекту <имя_объекта>, поэтому было необходимо
+    задать вопрос"
+
+/* ExplainWhy.c                 IBM              27.03.95
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void ExplainWhy (ob)
+     struct OBJECT  *ob;
+{
+   extern FILE  *prtcl;
+   extern char  EXPL[], EMPT[],
+                protocol;
+
+  printf("\n%s There is not a rule for getting value of \"%s\"",
+           EXPL, ob->name);
+  printf("\n%s that is why it needs to be asked.", EMPT);
+  if (protocol)
+     {
+       fprintf(prtcl,
+         "\n%s There is not a rule for getting value of \"%s\"",
+            EXPL, ob->name);
+       fprintf(prtcl,
+         "\n%s that is why it needs to be asked.", EMPT);
+     }
+}
+/*ExplainWhy.c ---------------------------------------------------------*/
+
+
+          Result()
+          ========
+- выводит результат на экран и в файл протокола (в режиме -prot).
+Сначала выводится слово "RESULT:", a затем внешний цикл while(r)
+просматривает список объектов, составляющих структуру результа и
+включенных в файл с <>.res. Для каждого объекта во внутреннем
+цикле while(v) просматривается его список разрешенных значений и
+анализируется коэффициент уверенности каждого значения. Если ко-
+эффициент уверенности для значения больше пороговой величины 10,
+то на печать выводится сообщение в форме:
+  "объект = значение, коэффициент уверенности = значение".
+
+/* Result.c                 IBM             17.10.97
+  CADSHELL complex
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void  Result ()
+{
+         extern FILE *prtcl;
+         extern char protocol, debug, EMPT[];
+  extern struct LIST *res;
+         struct LIST *r;
+       struct OBJECT *ob;
+        struct VALUE *v;
+                char main_val[80], vcf;
+
+  printf("\nRESULT:");
+  if (protocol) fprintf(prtcl, "\nRESULT:");
+  r = res;
+  while ( r )
+    {
+      if (FindObj ( r->elem, &ob))
+        {
+          if (debug) fprintf(prtcl, "\nOBJECT: %s ", ob->name);
+          v = ob->value;  vcf = 0;  main_val[0] = '\0';
+          while (v)
+            {
+              if (debug) fprintf(prtcl,"\n%s VAL: %s, cf=%d",
+                         EMPT, v->name, v->cert);
+              if (v->cert > vcf)
+                 {  vcf = v->cert;
+                    strcpy(main_val, v->name);
+                 }
+              v = v->next;
+            }
+          if (vcf > 10)
+            { printf("\n%s = %s, cf = %d", ob->name, main_val, vcf);
+              if (protocol) fprintf(prtcl, "\n%s %s = %s, cf = %d",
+                    EMPT, ob->name, main_val, vcf);
+            }
+            else
+              { printf("\n%s = undefined;", ob->name);
+                if (protocol) fprintf(prtcl, "\n%s %s = undefined",
+                              EMPT, ob->name);
+              }
+        }
+      r = r->next;
+    }
+  return;
+}
+/* Result.c ------------------------------------------------------ */
+
+
+          Clearing()
+          ==========
+- очищает рабочую область и освобождает память, занятую под
+структуру результата.
+
+/* Clearing.c
+CADSHELL complex
+*/
+#include <stdio.h>
+#include "expert.h"
+
+void Clearing()
+{
+   extern struct OBJECT  *obj_list;
+     extern struct RULE  *rule_list;
+     extern struct LIST  *res;
+          struct OBJECT  *ob;
+           struct VALUE  *v;
+            struct RULE  *ru;
+            struct LIST  *re;
+
+  ru = rule_list;
+  while (ru)
+    {
+      ru->used = 0;
+      ru = ru->next;
+    }
+  ob = obj_list;
+  while ( ob )
+    {
+      v = ob->value;
+      while ( v )
+        {
+          v->cert = 0;
+          v = v->next;
+        }
+      ob = ob->next;
+    }
+  while (res)
+    {
+      re = res;
+      res = re->next;
+      free(re->elem);
+      free(re);
+    }
+  res = NULL;
+  return;
+}
+/* Clearing.c ---------------------------------------------------- */
+

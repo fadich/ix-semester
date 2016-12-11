@@ -1,0 +1,11 @@
+PRINT "The program "
+FOR X = 1 TO 4
+PRINT X, X/2; X, X*X
+NEXT
+GOSUB 300
+PRINT "Hello!"
+INPUT H
+PRINT "H= ", H
+END
+300 PRINT "This is a subPGM"
+RETURN

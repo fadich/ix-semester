@@ -1,0 +1,908 @@
+
+             Получение множественный решений
+
+     Иногда приходится находить несколько решений той же самой
+проблемы. Однако, это не та ситуация, в которой необходимо найти
+все решения, как это происходит при исчерпывающем поиске. Напри-
+мер, вообразите, что Вы проектируете "дом вашей мечты": Вы дела-
+ете набросок нескольких различных планов зданий, чтобы найти тот,
+который Вам понравиться больше всего. Вы не делаете эскизы всех 
+возможных видов зданий. Таким образом, множественные решения мо-
+гут предоставлять выбор, чтобы помочь Вам найти лучшее решение 
+в вашей ситуации.
+     Существует много методов выработки множественных решений, 
+здесь рассмотрим только два: 1) удаление пути; 2) удаление узла.
+Как подразумевают названия этих методов, выработка множественных 
+решений требует удаления из системы уже найденных решений. Ни 
+один из этих методов не используется для нахождения всех решений.
+Обнаружение всех решений - это другая задача и в основном требует
+исчерпывающий поиск.
+
+                Метод с удалением пути
+
+     Метод удаления пути вырабатывает множество решений, удаляя
+из базы данных все узлы, которые формируют текущее решение, и
+затем пытается найти другое решение. В сущности, метод удаления
+пути сокращает количество ветвей дерева.
+   Чтоб найти множественные решения с помощью метода удаления 
+пути, необходимо изменить только функцию main(), использовавшу-
+юся в поиске вглубину. Поскольку любая связь, которая является 
+частью решения, будет иметь в своем поле skip отметку, она боль-
+ше не может быть найдена процедурой find().  Следовательно, все 
+связи в решении эффективно удаляются.  Единственное, что должно
+быть выполнено - это переустановить tos, чтоб очистить стек воз-
+врата. Программа с этой версией main() найдет следующие решения:
+
+  New York to Chicago to Denver to Los Angeles
+  distance is 3000
+
+  New york to Toronto to Los Angeles
+  distance is 2600
+
+  New York to Denver to Los Angeles
+  distance is 2900
+
+     Интересно, что найдены три лучших решения. Однако, нельзя
+делать обобщения на основе этого результата, потому что он осно-
+ван на способе, которым данные помещены в базу данных и на кон-
+кретной ситуации.
+
+#define MAX 100
+ /* структура базы данных рейсов */
+struct FL 
+  { char  from[20];
+    char  to [20];
+     int  distance;
+    char  skip;  /* used in backtracking  */
+  };
+struct stack
+  { char  from[20];
+    char  to[20];
+     int  dist;
+};
+
+ =====================
+/* Finding multiple solutions by Path-Removal
+  Depth-first search                          05.12.98
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "search.h"
+
+void isflight (char *, char *);
+int route (char *);
+void setup (void);
+
+struct FL flight[MAX]; /* array of db structures */
+int f_pos=0;           /* number of entries in flight db */
+int find_pos=0;        /* index for searching flight db */
+int tos=0;             /* top of stack */
+struct stack bt_stack[MAX]; /* backtracking stack */
+
+void main()
+{
+   char from[20],to[20];
+    int dist;
+
+   setup();
+   printf ("from? ");
+   gets (from);
+   printf("to? ");
+   gets (to);
+   do
+    { isflight (from, to);
+      dist = route (to);
+      if (!dist) break;
+      tos = 0; /* reset the backtrack stack */
+    } while (getche() != 'q');
+   getch();
+   return;
+}
+=======================
+/* place facts into flight db        19.11.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+ void assert_flight (from, to, dist)
+	       char  *from, *to;
+		int  dist;
+{
+       extern int  f_pos;
+ extern struct FL  flight[];
+
+  if (f_pos < MAX)
+  { 
+     strcpy (flight[f_pos].from, from);
+     strcpy (flight[f_pos].to, to);
+     flight[f_pos].distance = dist;
+     flight[f_pos].skip = 0;
+     f_pos++;
+  }
+  else printf("Flight database full.\n");
+  return;
+}
+==============================
+/* given from, find anywhere          16.11.98
+*/
+#include <string.h>
+#include "search.h"
+
+int find (from, anywhere)
+    char *from, *anywhere;
+{
+extern struct FL  flight[];
+      extern int  find_pos, f_pos;
+
+   find_pos=0;
+   while (find_pos < f_pos)
+     {
+      if (!strcmp (flight[find_pos].from,from) &&
+	  !flight[find_pos].skip)
+        {
+	  strcpy (anywhere, flight[find_pos].to);
+	  flight[find_pos].skip = 1;  /* make active */
+	  return  flight[find_pos].distance;
+        }
+      find_pos++;
+   }
+   return 0;
+}
+==========================
+/* determine if there is a route          19.11.98
+   between from and to */
+
+void isflight (from,to)
+    char *from,*to;
+{
+       int  d,dist;
+      char  anywhere[20];
+extern int  tos;
+
+  /* see if destination is reached */
+  d= match(from,to);
+  if (d)
+   {
+     push (from, to ,d);
+     return;
+   }
+  /* try another connection */
+  dist = find(from,anywhere);
+  if (dist)
+    {
+     push (from,to,dist);
+     isflight (anywhere,to);
+    }
+    else 
+      if (tos > 0)
+       { /*backtrack*/
+         pop (from,to,&dist);
+         isflight (from,to);
+       }
+  return;
+}
+==========================
+/* if connection between from and to,          16.11.98
+   then return the distance of flight; 
+   if not, return 0 */
+#include <string.h>
+#include "search.h"
+
+ int match (from,to)
+     char *from, *to;
+{
+    register int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for (t=f_pos-1; t>-1; t--)
+    if(!strcmp(flight[t].from,from)&&
+       !strcmp(flight[t].to,to))  return flight[t].distance;
+  return 0; /* not found */
+}
+============================
+/*                                   19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+void pop (from,to,dist)
+    char  *from, *to;
+     int  *dist;
+{
+	 extern int  tos;
+extern struct stack  bt_stack[];
+
+  if(tos > 0)
+    {
+      tos--;
+      strcpy(from,bt_stack[tos].from);
+      strcpy(to,bt_stack[tos].to);
+      *dist=bt_stack[tos].dist;
+    }
+   else printf("Stack underflow.\n");
+}
+/* stack routness                19.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void push (from,to,dist)
+      char  *from, *to;
+       int  dist;
+{
+extern struct stack  bt_stack[];
+extern int  tos;
+
+   if (tos < MAX)
+   {
+     strcpy(bt_stack[tos].from,from);
+     strcpy(bt_stack[tos].to,to);
+     bt_stack[tos].dist=dist;
+     tos++;
+   }
+    else  printf("Stack full.\n");
+   return;
+}
+==============================
+/*  found the route and distance             05.12.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+int route (to)
+    char *to;
+{
+                int  dist,t;
+extern struct stack  bt_stack[];
+         extern int  tos;
+
+  t=0;
+  dist=0;
+  while (t<tos)  
+    {
+      printf("%s to ", bt_stack[t].from);
+      dist += bt_stack[t].dist;
+      t++;
+    }
+  printf("%s\n",to);
+  printf("distance is %d\n",dist);
+  return dist;
+}
+=============================
+void setup()
+{
+  assert_flight("New York","Chicago",1000);
+  assert_flight("Chicago","Denver",1000);
+  assert_flight("New York","Toronto",800);
+  assert_flight("New York","Denver",1900);
+  assert_flight("Toronto","Calgary",1500);
+  assert_flight("Toronto","Los Angeles",1800);
+  assert_flight("Toronto","Chicago",500);
+  assert_flight("Denver","Urbana",1000);
+  assert_flight("Denver","Houston",1500);
+  assert_flight("Houston","Los Angeles",1500);
+  assert_flight("Denver","Los Angeles",1000);
+
+  assert_flight("С.-Петербург","Москва",640);
+  assert_flight("С.-Петербург","Рига",480);
+  assert_flight("Рига","Минск",410);
+  assert_flight("Москва","Минск",660);
+  assert_flight("Москва","Харьков", 650);
+  assert_flight("Минск","Харьков",740);
+  assert_flight("Минск","Киев",440);
+  assert_flight("Москва","Киев",740);
+  assert_flight("Киев","Харьков",410);
+  assert_flight("Киев","Львов",470);
+  assert_flight("Киев","Одесса",450);
+  assert_flight("Львов","Одесса",620);
+  assert_flight("Киев","Симферополь",660);
+  assert_flight("Киев","Днепропетровск",390);
+  assert_flight("Харьков","Одесса",560);
+  assert_flight("Харьков","Симферополь",580);
+  assert_flight("Харьков","Донецк",250);
+  assert_flight("Донецк","Симферополь",440);
+  assert_flight("Днепропетровск","Симферополь",400);
+  assert_flight("Одесса","Симферополь",320);
+  assert_flight("Симферополь","Одесса",320);
+  return;
+  }
+
+
+                 Метод с удалением узла
+
+     Метод с удалением узла - другой способ выработки множествен-
+ных решений. Он просто удаляет последний узел для текущего реше-
+ния и затем пробует искать снова. Чтобы сделать это, функция
+main() должна извлекать последний узел из стека возврата и уда-
+лять его из базы данных, используя новую функцию,  называемую
+retract(). Необходимо также повторно  переустановить  все  поля
+skip, используя clearmarkers() и очистить стек возврата. 
+     Программа получит следующий результат:
+
+   New York to Chicago to Denver to Los Angeles
+   distance is 3000
+
+   New York to Chicago to  Denver  to  Houston  to  Los  Angeles
+   distance is 5000
+
+   New York to Toronto to Lоs Angeles
+   distance is 2600
+
+     Второе решение содержит самый плохой из возможных маршрутов,
+но программа находит и оптимальное решение. Помните, что эти ре-
+зультаты  невозможно обобщить,  потому что они основаны на физи-
+ческой организации данных в базе данных и на определенной изуча-
+емой задаче.
+
+
+#define MAX 100
+ /* структура базы данных рейсов */
+struct FL 
+  { char  from[20];
+    char  to [20];
+     int  distance;
+    char  skip;  /* used in backtracking  */
+  };
+struct stack
+  { char  from[20];
+    char  to[20];
+     int  dist;
+};
+
+ ===================
+/* Finding multiple solutions by Node-Removal
+  Depth-first search                          19.11.98
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "search.h"
+
+void isflight (char *, char *);
+int route (char *);
+void setup (void);
+
+struct FL flight[MAX]; /* array of db structures */
+int f_pos=0;           /* number of entries in flight db */
+int find_pos=0;        /* index for searching flight db */
+int tos=0;             /* top of stack */
+struct stack bt_stack[MAX]; /* backtracking stack */
+
+void main()
+{
+   char  from[20], to[20], c1[20], c2[20];
+    int  d;
+
+   setup();
+   printf ("from? ");
+   gets (from);
+   printf("to? ");
+   gets (to);
+   do
+    { isflight (from, to);
+      d = route (to);
+      if (!d) break;
+      clearmarkers(); /* reset the database */
+      if (tos > 0) pop (c1,c2,&d);
+      retract (c1,c2); /* remove last node from database */
+      tos = 0; /* reset the backtrack stack */
+    } while (getche() != 'q');
+   getch();
+   return;
+}
+====================
+/* place facts into flight db        19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+ void assert_flight (from, to, dist)
+	       char  *from, *to;
+		int  dist;
+{
+       extern int  f_pos;
+ extern struct FL  flight[];
+
+  if (f_pos < MAX)
+  { 
+     strcpy (flight[f_pos].from, from);
+     strcpy (flight[f_pos].to, to);
+     flight[f_pos].distance = dist;
+     flight[f_pos].skip = 0;
+     f_pos++;
+  }
+  else printf("Flight database full.\n");
+  return;
+}
+=============================
+/* reset the "skip" field i.e.,            19.11.98
+   retractive all nodes */
+#include "search.h"
+
+void clearmarkers()
+{
+	     int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+   for (t=0;t<f_pos;++t)
+       flight[t].skip=0;
+   return;
+}=========================
+/* given from, find anywhere          16.11.98
+*/
+#include <string.h>
+#include "search.h"
+
+int find (from, anywhere)
+    char *from, *anywhere;
+{
+extern struct FL  flight[];
+      extern int  find_pos, f_pos;
+
+   find_pos=0;
+   while (find_pos < f_pos)
+     {
+      if (!strcmp (flight[find_pos].from,from) &&
+	  !flight[find_pos].skip)
+        {
+	  strcpy (anywhere, flight[find_pos].to);
+	  flight[find_pos].skip = 1;  /* make active */
+	  return  flight[find_pos].distance;
+        }
+      find_pos++;
+   }
+   return 0;
+}
+==================================
+/* determine if there is a route          19.11.98
+   between from and to */
+
+void isflight (from,to)
+    char *from,*to;
+{
+       int  d,dist;
+      char  anywhere[20];
+extern int  tos;
+
+  /* see if destination is reached */
+  d= match(from,to);
+  if (d)
+   {
+     push (from, to ,d);
+     return;
+   }
+  /* try another connection */
+  dist = find(from,anywhere);
+  if (dist)
+    {
+     push (from,to,dist);
+     isflight (anywhere,to);
+    }
+    else 
+      if (tos > 0)
+       { /*backtrack*/
+         pop (from,to,&dist);
+         isflight (from,to);
+       }
+  return;
+}
+==========================
+/* if connection between from and to,          16.11.98
+   then return the distance of flight; 
+   if not, return 0 */
+#include <string.h>
+#include "search.h"
+
+ int match (from,to)
+     char *from, *to;
+{
+    register int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for (t=f_pos-1; t>-1; t--)
+    if(!strcmp(flight[t].from,from)&&
+       !strcmp(flight[t].to,to))  return flight[t].distance;
+  return 0; /* not found */
+}
+============================
+/*                                   19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+void pop (from,to,dist)
+    char  *from, *to;
+     int  *dist;
+{
+	 extern int  tos;
+extern struct stack  bt_stack[];
+
+  if(tos > 0)
+    {
+      tos--;
+      strcpy(from,bt_stack[tos].from);
+      strcpy(to,bt_stack[tos].to);
+      *dist=bt_stack[tos].dist;
+    }
+   else printf("Stack underflow.\n");
+}
+/* stack routness                19.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void push (from,to,dist)
+      char  *from, *to;
+       int  dist;
+{
+extern struct stack  bt_stack[];
+extern int  tos;
+
+   if (tos < MAX)
+   {
+     strcpy(bt_stack[tos].from,from);
+     strcpy(bt_stack[tos].to,to);
+     bt_stack[tos].dist=dist;
+     tos++;
+   }
+    else  printf("Stack full.\n");
+   return;
+}
+
+===================================
+/* remove an entry                   19.11.98
+   from the database */
+#include <string.h>
+#include "search.h"
+
+void retract(from,to)
+    char *from, *to;
+{
+	     int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for(t=0;t<f_pos;t++)
+    if(!strcmp(flight[t].from,from) &&
+       !strcmp(flight[t].to,to))  {
+	  strcpy(flight[t].from,"");
+	  return;
+    }
+  return;
+}=====================
+/*  found the route and distance             05.12.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+int route (to)
+    char *to;
+{
+                int  dist,t;
+extern struct stack  bt_stack[];
+         extern int  tos;
+
+  t=0;
+  dist=0;
+  while (t<tos)  
+    {
+      printf("%s to ", bt_stack[t].from);
+      dist += bt_stack[t].dist;
+      t++;
+    }
+  printf("%s\n",to);
+  printf("distance is %d\n",dist);
+  return dist;
+}
+
+                Нахождение оптимального решения
+
+     Все описанные методы поиска ориентированны на обнаружение 
+решения. Как показывает эвристический поиск, были применены уси-
+лия, чтобы увеличить вероятность обнаружения "хорошего" и, пред-
+почтительно лучшего, решения. Однако, иногда желательно только 
+оптимальное решение. Термин "оптимальное решение" используется
+здесь для обозначения наилучшего маршрута, который Вы можете най-
+ти, используя одну из различных технологий нахождания множествен-
+ных решений. Фактически оно может и не быть лучшим решением.(Об-
+наружение действительно оптимального решения требовало бы пре-
+дельно дорогого исчерпывающего поиска.)
+     Составим программу, которая находит оптимальный путь, сог-
+ласно предположению, что необходимо минимизировать расстояние.  
+Эта программа использует метод удаления пути и выработку множе-
+ственных решений, а так же поиска по минимальной стоимости для 
+минимизации расстояния.
+     Ключом к обнаружению самого короткого маршрута является то,
+что необходимо хранить решение,  имеющее расстояние меньшее, чем
+предыдущее. Следовательно, когда программа найдет все множест-
+венные решения, только тогда оптимальный маршрут будет найден.
+Чтоб выполнять это, необходимо внести изменения в функции route()
+и создать дополнительный стек, называемый стеком решений, который
+должен содержать текущее решение, а после завершения поиска - 
+оптимальное решение. Изменения внесены в main() и в spush(), ко-
+торая помещает новые узлы в стек решений.
+     Этот метод имеет один недостаток: он следует по всем путям 
+до их конца. Улучшенный метод прекратил бы следовать по пути,
+как только обнаружил бы, что расстояние, связанное с этим путем 
+было бы равно или превысить текущее расстояние. Вы можете изме-
+нить эту программу для ее улучшения.
+#define MAX 100
+ /* структура базы данных рейсов */
+struct FL 
+  { char  from[20];
+    char  to [20];
+     int  distance;
+    char  skip;  /* used in backtracking  */
+  };
+struct stack
+  { char  from[20];
+    char  to[20];
+     int  dist;
+};
+
+ ==============================
+/* Optimal solution using 
+   least-cost with Path-Removal
+  Depth-first search                          23.11.98
+*/
+#include <conio.h>
+#include <stdio.h>
+#include "search.h"
+
+void isflight (char *, char *);
+int route (char *);
+void setup (void);
+
+struct FL flight[MAX]; /* array of db structures */
+int f_pos=0;           /* number of entries in flight db */
+int find_pos=0;        /* index for searching flight db */
+int tos=0;             /* top of stack */
+int stos=0;    /* top of solution stack */    
+struct stack bt_stack[MAX]; /* backtracking stack */
+struct stack solution[MAX]; /* hold temporary solution */
+
+void main()
+{
+   char  from[20],to[20];
+    int  t,d;
+
+   setup();
+   printf ("from? ");
+   gets (from);
+   printf("to? ");
+   gets (to);
+   do
+    { isflight (from, to);
+      d = route (to);
+      tos = 0; /* reset the backtrack stack */
+    } while (d != 0); /* while still finding solusions */
+   t = 0;
+   printf ("\nOptimal solution is:\n");
+   while (t < stos)
+     { printf ("%s to ", solution[t].from);
+       d += solution[t].dist;
+       t++;
+     }
+   printf("%s\n", to);
+   printf("distance is %d\n", d);
+   getch();
+   return;
+}
+=============================
+/* place facts into flight db        19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+ void assert_flight (from, to, dist)
+	       char  *from, *to;
+		int  dist;
+{
+       extern int  f_pos;
+ extern struct FL  flight[];
+
+  if (f_pos < MAX)
+  {
+     strcpy (flight[f_pos].from, from);
+     strcpy (flight[f_pos].to, to);
+     flight[f_pos].distance = dist;
+     flight[f_pos].skip = 0;
+     f_pos++;
+  }
+  else printf("Flight database full.\n");
+  return;
+}
+================================
+/* given from, find anywhere          16.11.98
+*/
+#include <string.h>
+#include "search.h"
+
+int find (from, anywhere)
+    char *from, *anywhere;
+{
+extern struct FL  flight[];
+      extern int  find_pos, f_pos;
+
+   find_pos=0;
+   while (find_pos < f_pos)
+     {
+      if (!strcmp (flight[find_pos].from,from) &&
+	  !flight[find_pos].skip)
+        {
+	  strcpy (anywhere, flight[find_pos].to);
+	  flight[find_pos].skip = 1;  /* make active */
+	  return  flight[find_pos].distance;
+        }
+      find_pos++;
+   }
+   return 0;
+}
+========================
+/* determine if there is a route          19.11.98
+   between from and to */
+
+void isflight (from,to)
+    char *from,*to;
+{
+       int  d,dist;
+      char  anywhere[20];
+extern int  tos;
+
+  /* see if destination is reached */
+  d= match(from,to);
+  if (d)
+   {
+     push (from, to ,d);
+     return;
+   }
+  /* try another connection */
+  dist = find(from,anywhere);
+  if (dist)
+    {
+     push (from,to,dist);
+     isflight (anywhere,to);
+    }
+    else 
+      if (tos > 0)
+       { /*backtrack*/
+         pop (from,to,&dist);
+         isflight (from,to);
+       }
+  return;
+}
+==============================
+/* if flight between from and to,          16.11.98
+   then return the distance of flight; 
+   if not, return 0 */
+#include <string.h>
+#include "search.h"
+
+ int match (from,to)
+     char *from, *to;
+{
+    register int  t;
+extern struct FL  flight[];
+      extern int  f_pos;
+
+  for (t=f_pos-1; t>-1; t--)
+    if(!strcmp(flight[t].from,from)&&
+       !strcmp(flight[t].to,to))  return flight[t].distance;
+  return 0; /* not found */
+}
+========================
+/*                                   19.11.98
+*/
+#include <stdio.h>
+#include <string.h>
+#include "search.h"
+
+void pop (from,to,dist)
+    char  *from, *to;
+     int  *dist;
+{
+	 extern int  tos;
+extern struct stack  bt_stack[];
+
+  if(tos > 0)
+    {
+      tos--;
+      strcpy(from,bt_stack[tos].from);
+      strcpy(to,bt_stack[tos].to);
+      *dist=bt_stack[tos].dist;
+    }
+   else printf("Stack underflow.\n");
+}
+/* stack routness                19.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void push (from,to,dist)
+      char  *from, *to;
+       int  dist;
+{
+extern struct stack  bt_stack[];
+extern int  tos;
+
+   if (tos < MAX)
+   {
+     strcpy(bt_stack[tos].from,from);
+     strcpy(bt_stack[tos].to,to);
+     bt_stack[tos].dist=dist;
+     tos++;
+   }
+    else  printf("Stack full.\n");
+   return;
+}
+
+===========================
+/*  found shortest distance             19.11.98
+*/
+#include <stdio.h>
+#include "search.h"
+
+int route (to)
+    char *to;
+{
+                int  dist,t;
+         static int  old_dist = 32000;
+extern struct stack  bt_stack[];
+	 extern int  tos, stos;
+
+  if (!tos) return 0; /* all done  */
+  t=0;
+  dist=0;
+  while (t<tos)  
+    {
+      printf("%s to ", bt_stack[t].from);
+      dist += bt_stack[t].dist;
+      t++;
+    }
+  printf("%s\n", to);
+  printf("distance is %d\n", dist);
+/* if shorter, then make new solution */
+  if (dist < old_dist && dist)
+    { t=0;
+      old_dist = dist;
+      stos = 0;  /* clear old route from solution stack */
+      while (t < tos)
+        { spush (bt_stack[t].from, bt_stack[t].to,
+                 bt_stack[t].dist);
+          t++;
+        }
+     }
+  return dist;
+}
+============================
+/* solution stack                 23.11.98
+*/
+#include <string.h>
+#include <stdio.h>
+#include "search.h"
+
+void spush (from, to, dist)
+     char  *from, *to;
+      int  dist;
+{
+ extern struct stack  solution[];
+          extern int  stos;
+
+  if (stos < MAX)  
+    {
+     strcpy (solution[stos].from,from);
+     strcpy (solution[stos].to,to);
+     solution[stos].dist=dist;
+     stos++;
+    }
+  else printf("Shortest distance stack full.\n");
+}

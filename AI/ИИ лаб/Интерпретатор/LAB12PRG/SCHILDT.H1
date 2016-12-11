@@ -1,0 +1,77 @@
+/* schildt.h1             IBM 386        01.12.94
+*/
+#define NUM_LAB  100
+#define LAB_LEN  10
+#define FOR_NEST 25
+#define SUB_NEST 25
+#define PROG_SIZE 10000
+
+#define DELIMITER   1
+#define VARIABLE    2
+#define NUMBER      3
+#define COMMAND     4
+#define STRING      5
+#define QUOTE       6
+
+#define PRINT   1
+#define INPUT   2
+#define IF      3
+#define THEN    4
+#define FOR     5
+#define NEXT    6
+#define TO      7
+#define GOTO    8
+#define EOL     9
+#define FINISHED 10
+#define GOSUB   11
+#define RETURN  12
+#define END     13
+
+int variables[26]=
+  {
+   0,0,0,0,0,0,0,0,0,0,
+   0,0,0,0,0,0,0,0,0,0,
+   0,0,0,0,0,0
+  };
+
+char *prog,
+      token[80],
+      token_type,
+      tok,
+      *gstack[SUB_NEST];
+
+struct commands
+ {
+  char command[20],
+        tok;
+ }table[]=
+   { "print",PRINT,
+     "input",INPUT,
+     "if",IF,
+     "then",THEN,
+     "goto",GOTO,
+     "for",FOR,
+     "next",NEXT,
+     "to",TO,
+     "gosub",GOSUB,
+     "return",RETURN,
+     "end",END,
+     "",END
+   };
+
+struct label
+ {
+  char name[LAB_LEN],
+       *p;
+ } label_table[NUM_LAB];
+
+struct for_stack
+ {
+  int var,
+      target;
+  char *loc;
+ } fstack [FOR_NEST];   /*stack for cycle FOR/NEXT */
+
+int ftos, /*index of stack FOR beginning */
+    gtos; /*index of stack GOSUB beginning */
+

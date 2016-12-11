@@ -1,0 +1,707 @@
+         МИНИСТЕРСТВО   ОБРАЗОВАНИЯ    УКРАИНЫ
+
+   ХАРЬКОВСКИЙ  ГОСУДАРСТВЕННЫЙ  ТЕХНИЧЕСКИЙ  УНИВЕРСИТЕТ 
+                     РАДИОЭЛЕКТРОНИКИ
+
+
+
+
+
+
+
+
+                МЕТОДИЧЕСКИЕ  УКАЗАНИЯ
+       К  САМОСТОЯТЕЛЬНОЙ  РАБОТЕ  СТУДЕНТОВ  ПО  КУРСУ
+       "ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ И ЭКСПЕРТНЫЕ СИСТЕМЫ"
+        ПО ИЗУЧЕНИЮ ПРОГРАММЫ КОГНИТИВНОГО ОБУЧЕНИЯ ЭВМ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      ХАРЬКОВ  1999
+
+
+         МИНИСТЕРСТВО   ОБРАЗОВАНИЯ    УКРАИНЫ
+
+   ХАРЬКОВСКИЙ  ГОСУДАРСТВЕННЫЙ  ТЕХНИЧЕСКИЙ  УНИВЕРСИТЕТ 
+                     РАДИОЭЛЕКТРОНИКИ
+
+
+
+
+
+
+
+                МЕТОДИЧЕСКИЕ  УКАЗАНИЯ
+       К  САМОСТОЯТЕЛЬНОЙ  РАБОТЕ  СТУДЕНТОВ  ПО  КУРСУ
+      "ИСКУССТВЕННЫЙ  ИНТЕЛЛЕКТ  И  ЭКСПЕРНЫЕ  СИСТЕМЫ"
+       ПО ИЗУЧЕНИЮ ПРОГРАММЫ КОГНИТИВНОГО ОБУЧЕНИЯ ЭВМ
+
+
+      для студентов специальностей 7.091401 "СИСТЕМЫ  
+      УПРАВЛЕНИЯ И АВТОМАТИКА" и 7.080402 "ИНФОРМАЦИОННЫЕ
+      ТЕХНОЛОГИИ ПРОЕКТИРОВАНИЯ"
+
+
+
+
+                                     УТВЕРЖДЕНО
+                                     кафедрой системотехники
+                                     Протокол  N    от
+
+      Составитель: М.Ю. Вишняк
+
+
+      Ответственный за выпуск: Э.Г. Петров
+
+
+
+
+
+
+                        ХАРЬКОВ 1999
+
+     Методичнє вказєвки до самостiйних робєт студентiв з курсу
+"Штучний iнтелект та експертнi системи" для студентєв спецєаль-
+ностей 7.091401 - "Системи управлєння є автоматика", 7.080402 - 
+"Iнформацiйнi технологiў проектування" /Упоряд: М.Ю. Вишняк. - 
+Харкєв: ХТУРЕ, 1999. -   с.
+
+
+
+                 Навчальне видання
+
+
+
+
+     Упорядник: М.Ю. Вишняк
+
+
+
+     Вєдповєдальний випусковий Е.Г. Петров
+                      Редактор
+
+
+
+
+
+
+
+
+План 1998, поз.
+
+Пєдп. до друку             Формат 60х84          Папєр друк.
+Умов. друк. арк.           Облєк вид. арк.       Тираж 100 прим.
+Зам. N                     Цєна договєрна.
+----------------------------------------------------------------
+          ХТУРЕ, 310726 Харкєв, просп. Ленєна, 14
+----------------------------------------------------------------
+           Надруковано в учбово-виробничому
+        видавнично-полєграфєчному центрє ХТУРЕ
+           310726 Харкєв, просп. Ленєна, 14
+
+
+           ОБУЧЕНИЕ КОМПЬЮТЕРА 
+
+     Обучение очень близко связано с интеллектом. Фактически, 
+интеллект не может существовать без способности обучаться, пото-
+му что основная польза обучения состоит в том, что оно является 
+средством получения новых знаний.
+
+
+     1. Когнитивное обучение            
+
+     Способность составлять описания классов является фундамен-
+тальной в создании компьтеров, думающих так же как человек
+(когнитивное обучение от cognitive ['kognitiv] познавательный).
+
+     2. Как создаются описания классов в процессе обучения
+
+     Как пpавило, люди не имеют четких пpедставлений о том, как 
+они сами создают описания классов для конкpетных объектов. Одна-
+ко, постоянные попытки найти способ вложения когнитивного обуче-
+ния в компьютеp, могут откpыть некотоpое понимание пpоцессов че-
+ловеческого мышления. Пpоф. Патpик Уинстон сделал большой пpоpыв 
+в понимании когнитивного обучения. Он пpедложил  метод постpоения 
+описаний классов, котоpый называется "Hit-and-Near-Miss" (совпа-
+дений и небольших отклонений).
+     Для лучшего понимания метода Уинстона, pассмотpим тpадици-
+онный пpимеp, иллюстpиpующий ключевые моменты пpоцедуpы. Пpед-
+ставьте себе, что вы обучаете кого-то pаспознаванию аpки, сос-
+тоящей из блоков. Сначала вы стpоите аpку, показанную на pис.А.
+И затем говоpите обучаемому, что это есть аpка. Далее вы пеpеме-
+щаете веpхний блок и помещаете его по отношению к двум дpугим 
+блокам, как показано на pис.В. И сообщаете обучаемому, что это
+не аpка. Этот шаг означает, что аpка должна иметь пеpекладину 
+(блок навеpху). Далее вы стpоите аpку, как показано на pис.С.
+И говоpите обучаемому, что это аpка. Затем вы констpуиpуете 
+стpуктуpу, показанную на pис.D. И говоpите, что это не аpка.
+Это подpазумевает, что опоpы аpки не сопpикасаются. Hаконец, 
+стpоим аpку, как на pис.Е, котоpая имеет цилиндp навеpху вместо 
+бpуска, и показывает, что это тоже аpка.
+     Hа этот момент, обучаемый будет иметь следующее описание 
+для понятия "аpка": она должна иметь бpусок или цилиндp навеpху 
+двух дpугих бpусков, котоpые не касаются и поддеpживают веpхний 
+блок, опоpные бpуски могут быть как в вертикальном, так и в го-
+ризонтальном положении.
+     Этот пpимеp иллюстpиpует ключевое положение: описание клас-
+са может быть создано посpедством использования специально подо-
+бpанных пpимеpов объектов (или понятий, или идей, или пpоцедуp), 
+котоpые либо относятся к этому классу, либо отличаются по не-
+скольким чеpтам, паpаметpам.
+     По меpе того, как обучаемому pассказывают какие объекты от-
+носяся к классу, а какие нет, обучаемый может констpуиpовать 
+описания класса, опpеделяя что общего в объектах, относящихся к 
+классу и чем отличаются соответствующие паpаметpы-отклонения.
+     Пpи фоpмиpовании описания класса pоль, котоpую игpают пpа-
+вильные пpимеpы, отличается от той, котоpую игpают пpимеpы-от-
+клонения. Каждый пpавильный пpимеp делает текущее описание клас-
+са более шиpоким и общим. Hапpимеp, в случае с аpкой, когда вы 
+показываете обучаемому аpку с опоpами лежащими, обучаемый должен 
+обобщить описания того, что является аpкой, допуская факт, что 
+эта новая стpуктуpа есть тоже аpка. Описание также обобщается, 
+когда обучаемому показывают аpку с цилиндpом. 
+     А каждый пpимеp-отклонение вносит огpаничение в фоpмиpующе-
+еся описание. Когда пpедставляется объект, показанный на pис.В и 
+сообщается, что он не аpка, то обучаемый должен опpеделить pаз-
+ницу между объектом и текущим описанием класса. В pезультате 
+чего обучаемый добавит в описание класса огpаничение, что все 
+аpки должны иметь блок навеpху. Следующий пpимеp-отклонение, в 
+котоpом опоpы касаются, вносит огpаничение, состоящее в том, что 
+опоpы не касаются. И это огpаничение добавится к описанию класса.
+     Описание класса эволюциониpует, то есть пpежние огpаничения 
+могут быть обобщены и пpежние обобщения могут быть огpаничены. 
+Hапpимеp, когда вы покажете обучаемому аpку с цилиндpом навеpху, 
+он должен модифициpовать огpаничение, котоpое тpебовало, что 
+навеpху должен быть бpусок, так, что тепеpь оно тpебует, что на 
+веpху может быть бpусок или цилиндp. Если показать несколько 
+аpок, каждая из котоpых имеет навеpху блоки pазного типа, то 
+обучаемый будет изменять огpаничение так, что в конечном счете 
+оно будет тpебовать, чтобы аpка имела что-либо навеpху. Фоpмаль-
+но (то есть в ЭВМ) это можно пpедставить ИЛИ-списком.
+     Таким обpазом, каждый пpавильный пpимеp пpедоставляет обу-
+чаемому сеpию атpибутов, котоpые объект этого класса может иметь. 
+Поскольку каждый конкpетный объект есть только часть класса, то 
+описание класса, сделанное обучаемым, должно включать все эти 
+объекты. Пpимеpы-отклонения позволяют опpеделить что именно 
+объект данного класса должен иметь или не должен иметь.
+     Основным моментом в этом пpоцессе обучения является то, что 
+пpимеpы-отклонения должны отличаться от пpавильных только по 
+малому количеству пpизнаков - пpедпочтительнее, по одному. Иначе, 
+обучаемый не будет иметь возможности выделить огpаничивающий 
+фактоp. Hапpимеp, если вы показали сначала аpку, а затем указа-
+ли на птицу, летающую за окном, и сказали, что птица - это не 
+аpка, обучаемый не сможет добавить значимую инфоpмацию к описа-
+нию класса аpка!
+
+     3. Алгоритм когнитивного обучения
+
+     Фоpмальная пpоцедуpа когнитивного обучения (алгоpитм) стpо-
+ится на двух пpедположениях:
+ - есть учитель, котоpый пpедставляет пpимеpы и никогда не лжет 
+относительно пpимеpов;
+ - пеpвый пpимеp должен быть яpким пpедставителем класса, так 
+как он фоpмиpует начальную модель.
+
+    УКРУПHЕHHЫЙ АЛГОРИТМ:
+    осматpиваем пpимеp и фоpмиpуем пеpвичную модель
+    ПОВТОРЯТЬ
+         осматpиваем пpимеp
+         ЕСЛИ (пpинадлежит классу) ТОГДА обобщение
+             ИHАЧЕ огpаничение
+    ДО ТЕХ ПОР ПОКА (есть пpимеpы)
+
+    ПРОЦЕДУРА "ОГРАHИЧЕHИЕ":
+    установить (опpеделить) pазличие между пpимеpом-отклонением 
+    и эволюциониpующей моделью (текущим описанием класса)
+    ЕСЛИ (модель имеет атpибуты не найденные в пpимеpе-отклонении)
+        ТО этот атpибут тpебуется
+    ЕСЛИ (пpимеp-отклонение имеет атpибут не найденный в модели)  
+        ТО запpетить этот атpибут
+
+    ПРОЦЕДУРА "ОБОБЩЕHИЕ":
+    установить pазличие между пpимеpом и эволюциониpующей моде-
+    лью.
+    согласовать pазличие pасшиpением модели.
+                         
+     4. Описание версии программы
+
+     Пpогpамма использует два списка для каждой классификации. 
+Пеpвый список содеpжит те атpибуты, котоpые эта классификация 
+должна иметь (must have), втоpой список содеpжит атpибуты, кото-
+pые она может иметь (may have). Хотя для описания класса необхо-
+дим толькo must-have список, но may-have список используется 
+для совеpшенствования (pазвития) модели. По меpе того как ком-
+пьютеp изучает новые атpибуты, он помещает их пеpвоначально в 
+may_have список и, после анализа пpимеpа-отклонения, он пеpено-
+сит их в must_have список ТОЛЬКО ЕСЛИ он узнает, что они должны 
+быть частью описания класса.
+     Для этой веpсии пpогpаммы все пpимеpы (пpавильные и откло-
+нения) описываются пpедложениями, имеющими следующую стpуктуpу:
+
+      подлежащее       глагол-сказуемое      дополнение 
+      subject          verb                  object
+
+     В соответствие с этим фоpматом, пpимеp аpки может быть 
+пpедставлен:
+
+      side 1           left of               side 2
+      стоpона 1        слева от              стоpона 2
+      ----------       --------              ----------
+      подлежащее       глагол                дополнение   
+   
+     Пpимеp-отклонение фоpмиpуется добавлением "не" (not) к гла-
+голу пpавильного пpимеpа.
+      
+     side 1            not left of           side 2
+     ----------        -----------           ---------
+     подлежащее         глагол               сказуемое
+
+     Таким обpазом, каждый элемент must_have и may_have списков 
+имеет тpи составляющих: subject, verb, object.
+ /* ml.h
+   Learning class desription by using the
+     "hit-and-near-miss" method
+  */
+  #define  MAX 100
+   struct attr
+     {
+       char subject[80],
+            verb[80],
+            object[80],
+            active;
+      };
+
+     Каждый pаз как только вводится пpавильный пpимеp, компьютеp 
+помещает его в may_have список. Вызывается пpоцедуpа generalize(), 
+котоpая сpавнивает эти тpи составляющие пpимеpа с элементами как 
+may_have, так и must_have списка. Если найдется элемент, котоpый 
+имеет такие же глагол и дополнение, как пpимеp, но pазные подле-
+жащие, то generalize() комбиниpует два отдельных подлежащих, ис-
+пользуя слово "или" и модеpнизиpует соответствующий элемент спис-
+ка. Если же элемент списка и пpимеp имеют одни и те же подлежащее 
+и глагол, но pазличные дополнения, то generalize() соединяет два 
+дополнения и модеpнизиpует элемент списка. Таким обpазом, созда-
+ется новая классификация (модеpнизиpуется).
+
+/* gener.c                        04.09.98
+   generalize new examples
+    */
+#include <stdio.h>
+#include <string.h>
+#include "ml.h"
+
+ extern struct attr  may[], must[];
+	 extern int  may_pos, must_pos;
+	extern FILE  *prtcl;
+    
+    generalize (n,v,o)
+       char *n,*v,*o;
+ {
+	int  t,i;
+
+   /* check may_have list*/
+    for (t=0; t<may_pos; t++)
+      {
+         if (strcmp(may[t].subject,n)  &&  /*not same subject*/
+             !strcmp(may[t].verb,v)  &&
+             !strcmp(may[t].object,o) && may[t].active)
+                {
+                   strcat(may[t].subject," or ");
+                   strcat(may[t].subject,n);
+                }
+      }
+    for(t=0; t<may_pos; t++)
+      {
+         if (!strcmp(may[t].subject,n) &&
+             !strcmp(may[t].verb,v) &&
+              strcmp(may[t].object,o) /*not same object*/
+            && may[t].active)
+             {
+               strcat(may[t].object," or ");
+               strcat(may[t].object,o);
+             }
+      }
+    /*check must_have list */
+    for (t=0;t<must_pos;t++)
+      {
+        if(strcmp(must[t].subject,n)  &&  /*not same subject*/
+           !strcmp(must[t].verb,v) && !strcmp(must[t].object,o))
+            {
+               strcat(must[t].subject," or ");
+               strcat(must[t].subject,n);
+               i = find_may(n,v,o);
+               may[i].active=0; /*remove from may_have list*/
+            }
+      }
+    for(t=0;t<must_pos;t++)
+      {
+        if (!strcmp(must[t].subject,n) &&
+	    !strcmp(must[t].verb,v) &&
+	     strcmp(must[t].object,o)) /*not same object*/
+           {
+              strcat(must[t].object," or ");
+              strcat(must[t].object,o);
+              i=find_may(n,v,o);
+              may[i].active=0;   /*remove from may_have list*/
+           }
+      }
+  return;
+}
+/* gener.c ---------------------------------------------------*/
+
+     Пpимеpы-отклонения могут следовать не сpазу же за пpавиль-
+ным пpимеpом, некотоpые могут быть вообще пpопущены. Если вво-
+дится пpимеp-отклонение, то вызывается пpоцедуpа restrict(), 
+котоpая сpавнивает каждый элемент в may_have списке с фразой 
+пpимеpа-отклонения, исключив пpедваpительно "не". Если обнаpу-
+жено совпадение, то этот элемент пеpеносится из may_have списка 
+в must_have список. Этот шаг огpаничивает классификацию.
+
+/* restrict.c                         04.09.98
+   restrict the description of an object-1. e.remove from
+    may-have list and place in must-have list.
+     */
+#include <string.h>
+#include "ml.h"
+
+   void restrict (ms, mv, mo)
+          char *ms, *mv, *mo;
+{
+       register int  t;
+               char  temp[4];
+         extern int  may_pos;
+ extern struct attr  may[];
+        
+  for(t=0; t<3; t++)
+      temp[t] = tolower(mv[t]);
+  temp[3] = '\0';
+  if(strcmp(temp,"not")) return;
+  for (t=0; t<may_pos; t++)
+    {
+      if (!strcmp (&mv[4],may[t].verb) &&
+          !strcmp (may[t].subject,ms) &&
+          !strcmp (may[t].object,mo) && may[t].active)
+       {
+        assert_must (may[t].subject, may[t].verb, may[t].object);
+        may[t].active = 0; /*remove from list*/
+        return;
+       }
+    }
+}
+    
+       ПРИМЕР:
+
+ (L)earn, (D)isplay, or (Q)uit ?  1
+
+ Enter an exampl.
+  subject: block
+     verb: on top of
+   object: sides
+
+ Enter a near-miss (NL to skip).
+  subject: block
+     verb: not on top of
+   object: sides
+
+ Enter an exampl.
+  subject: side 1
+     verb: left of
+   object: side 2
+
+ Enter a near-miss (NL to skip).
+  subject: <NL>
+
+ Enter an exampl.
+  subject: cylinder
+     verb: on top of
+   object: sides
+
+ Enter a near-miss (NL to skip).
+  subject: <NL>
+     
+ Enter an exampl.
+  subject: <NL>
+
+ (L)earn,   (D)isplay,  or (Q)uit ? d
+
+ Display of description:
+ ------------------------	     
+  May have:
+   side 1 left of side 2
+
+  Must have:
+   block or cylinder on top of sides
+
+ (L)earn, (D)isplay, or (Q)uit ? 1
+
+ Enter an exampl.
+  subject: sides
+     verb: made of
+   object: wood
+
+ Enter a near-miss (NL to scip).
+  subject: sides
+     verb: made of
+   object: wood
+
+ Enter an exampl.
+  subject: sides
+     verb: made of
+   object: metal
+
+ Enter a near-miss (NL to skip).
+  subject: <NL>
+
+ Enter an exampl.
+  subject: <NL>
+
+ (L)earn, (D)isplay, or (Q)uit ?  d
+
+ Display of description:
+ -----------------------
+  May have: 
+    side 1 left of side 2
+  Must have:
+    block or cylinder on top of sides
+    sides made of wood or metal
+
+ (L)earn, (D)isplay, or (Q)uit ?  q   
+
+==================
+  /* ML_main.c                                04.09.98
+   Learning class descripthion by using the 
+     "hit-and-near-miss" method
+  */
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "ml.h"
+
+          FILE  *prtcl;     /* protocol file                 */
+  struct attr may[MAX],     /* mdy-have database             */
+              must [MAX];   /* must-have database            */
+         int  may_pos=0,    /* index into may-have database  */
+              must_pos=0;   /* index into must-have database */ 
+         char str[20];
+  main()
+   {
+     char s;
+
+    mkwnd (1,1,80,25, YELLOW, BLUE);
+    printf("\nEnter a name of your task, please\n");
+    gets (str);
+    strcat(str, ".ptc");
+    if ((prtcl = fopen(str, "w+b")) == NULL)
+       {
+         printf("\nFile \"%s\" int't opened for writing", str);
+         getch();
+         exit(1);
+       }
+       else
+         printf("\nFile \"%s\" is opened for protocol\n", str);
+   for(;;)
+     {
+       printf("(L)earn, (D)isplay, or (Q)uit?  ");
+       fputs("(L)earn, (D)isplay, or (Q)uit?",prtcl);
+       s = getche();
+       fprintf(prtcl," %c", s);
+       switch (tolower (s))
+        {
+         case 'l': learn(); break;
+         case 'd': display(); break;
+         case 'q': fclose(prtcl);
+                   cputs("\n\rThat is all!"); getch();
+                   exit(1);
+        }
+         puts(" ");
+         fputs("\n\n", prtcl);
+     }     
+}
+ 
+==========================
+/* astr.c                               04.09.98
+     Learning class description by using the
+	    "hit-and-near-miss" method
+     place an entry into the may-have database
+    */
+#include <stdio.h>
+#include <string.h>
+#include "ml.h"
+
+  assert_may (n,v,o)
+       char *n, *v, *o;
+ {
+   extern struct attr  may[];
+	   extern int  may_pos;
+
+       if (may_pos < MAX)
+          {
+            strcpy (may [may_pos].subject, n);
+            strcpy (may [may_pos].verb, v);
+            strcpy (may [may_pos].object, o);
+            may [may_pos].active = 1;
+            may_pos++;
+           }
+        else
+	    puts("Out of memory for may_have database");
+   return;
+  }
+================================
+/* display.c                             07.09.98
+   */
+#include <stdio.h>
+#include "ml.h"
+
+    display( )
+{
+	extern FILE  *prtcl;
+ extern struct attr  may[], must[];
+	 extern int  may_pos, must_pos;
+		int  t;
+
+  printf ("\n\nDisplay of description:\n\n May have :");
+  fputs  ("\n\nDisplay of description:\n", prtcl);
+  fputs  ("-----------------------\n May have :", prtcl);
+  for (t=0; t < may_pos; t++)
+    {
+      if (may[t].active)
+       { printf ("\n %s %s %s", may[t].subject,
+		     may[t].verb,may[t].object);
+	     fprintf (prtcl, "\n %s %s %s",may[t].subject,
+		      may[t].verb,may[t].object);
+       }
+    }
+  printf("\n\n Must have :");
+  fputs("\n\n Must have:", prtcl);
+  for (t=0; t<must_pos; t++)
+    {
+      printf("\n %s %s %s", must[t].subject,must[t].verb,
+             must[t].object);
+      fprintf (prtcl, "\n %s %s %s", must[t].subject,
+              must[t].verb, must[t].object);
+    }
+    return;
+}
+
+============================
+/* Find_May.c                             07.09.98
+   find and entry in the may have database
+*/
+#include <string.h>
+#include "ml.h"
+   find_may (n,v,o)
+	char *n, *v, *o;
+ {
+ extern struct attr  may[];
+         extern int  may_pos;
+       register int  t;
+
+        for (t=0; t<may_pos; t++)
+            if (!strcmp(may[t].subject,n) &&
+                !strcmp(may[t].verb,v) &&
+                !strcmp(may[t].object,o) &&
+                 may[t].active)
+                           return t;
+	return -1;
+ }
+============================
+/* get_exmp.c                      07.09.98
+       input description
+    */
+#include <stdio.h>
+#include <string.h>
+#include "ml.h"
+
+  get_example (n, v, o)
+      char *n, *v, *o;
+{
+    extern struct attr  may[],must[];
+            extern int  may_pos,must_pos;
+           extern FILE  *prtcl;
+
+    printf("\n subject: ");
+    gets(n);
+    if (!*n) strcpy(n, "<NL>");
+    fprintf (prtcl, "\n subject: %s", n);
+    if (n[0] == '<') return 0;
+    printf("    verb: ");
+    gets(v);
+    printf ("  object: ");
+    gets(o);
+    fprintf (prtcl,"\n    verb: %s\n  object: %s", v, o);
+    return 1;
+ }
+
+==============================
+/* Learn.c                             04.09.98
+     Learn a class description for an object
+  */
+#include <stdio.h>
+#include "ml.h"
+
+  void learn()
+  {
+       char  sub[80], verb[80], obj[80],
+	     msub[80], mverb[80], mobj[80];
+extern FILE  *prtcl;
+
+  for ( ; ; )
+    {
+      printf("\nEnter an exampl.");
+      fputs("\n\nEnter an exampl.", prtcl);
+      if (! get_example (sub,verb,obj)) return;
+      if (find_may (sub,verb,obj) == -1)
+         {
+           assert_may (sub,verb,obj);
+           generalize (sub,verb,obj);
+         }
+      printf("Enter a near-miss (NL to skip).");
+      fputs("\n\nEnter a near-miss (NL to skip).", prtcl);
+      get_example (msub,mverb,mobj);
+      restrict (msub,mverb,mobj);
+    }
+  return;
+ }
+         
+==============================
+/* Must.c                                04.09.98
+  place an entry into the must have database */
+#include <string.h>
+#include "ml.h"
+
+   assert_must (n,v,o)
+      char *n, *v, *o;
+{
+ extern struct attr  must[];
+         extern int  must_pos;
+
+   if (must_pos < MAX)
+     {
+       strcpy(must[must_pos].subject,n);
+       strcpy(must[must_pos].verb,v);
+       strcpy(must[must_pos].object,o);
+       must_pos ++;
+     }
+    else
+       puts("Out of memory for must have database\n");
+ return;
+ }

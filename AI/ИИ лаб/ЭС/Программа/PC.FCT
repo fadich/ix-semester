@@ -1,0 +1,36 @@
+config() = Ok, not_Ok;
+processor() = Ok, not_Ok;
+processor_type() = XT, 80286, 80386, 80486;
+winch() = Ok, not_Ok;
+winch_val() = 10_Mb, 40_Mb, 80_Mb, 120_Mb;
+printer() = Ok, not_Ok;
+printer_type() = letter, matrix, laser;
+goal(What_is_a_goal_of_a_computer_usage) =
+    data_preparation, control, design,
+    text_processing;
+data_amount () =
+   small, mean, large, huge;
+area (What_is_a_scale_of_the_area) = small, mean, large, huge;
+calcul_amount (What_is_amount_of_calculation) =
+   small, mean, large, huge;
+processing_type (What_kind_of_the_processind_type) =
+   data_proc, numeric_calcul, text_proc;
+project_price (What_is_a_project_price) = less_1000, 1000-10000,
+   10000-100000, greater_100000;
+project_value () = small, mean, large, huge;
+_dbMS() = Ok, not_Ok;
+dbMS (What_kind_of_database_management_system_do_you_need) =
+   noneeded, dBase, FoxBase;
+_plotter() = Ok, not_Ok;
+plotter (Do_you_need_a_plotter) = Yes, No;
+_display () = Ok, not_Ok;
+display (What_kind_of_display_do_you_want) =
+      monochrome, color;
+_word_processor () = Ok, not_Ok;
+word_processor (What_kind_of_word_processor_do_you_need) =
+       simple, powerful;
+graph_syst () = Ok, not_Ok;
+graphics_system (What_kind_of_graphics_system_do_you_need) =
+      noneeded, simple, powerful;
+text_object (What_is_the_text_processing_object) =
+      publication, rough_draft;

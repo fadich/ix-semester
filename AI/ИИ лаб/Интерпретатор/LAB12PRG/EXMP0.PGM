@@ -1,0 +1,5 @@
+PRINT "The program "
+PRINT "Hello!"
+INPUT H
+PRINT "H= ", H
+END

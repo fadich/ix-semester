@@ -1,0 +1,15 @@
+
+SYST: Enter a goal, please.
+USER: ±config
+--< InStack >--ptr=0 --stack: 2E8E, next=0
+SYST: What is the value of "±config"?
+SYST: Enter a name:
+RESULT:
+      processor_type = undefined
+      winch_val = undefined
+      printer_type = undefined
+      dbMS = undefined
+      display = undefined
+      plotter = undefined
+      word_processor = undefined
+      graphics_system = undefined

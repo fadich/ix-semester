@@ -1,0 +1,22 @@
+/* schildt.h2             IBM 386        24.12.94
+  */
+#include "schildt.dfn"
+
+struct commands
+ {
+  char command[20],
+        tok;
+ };
+
+struct label
+ {
+  char name[LAB_LEN],
+       *p;
+ };
+
+struct for_stack
+ {
+  int var,
+      target;
+  char *loc;
+ };

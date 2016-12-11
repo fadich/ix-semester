@@ -1,0 +1,275 @@
+RULE (1)
+IF
+    processor = Ok and
+    winch = Ok and
+    printer = Ok and
+    _dbMS = Ok and
+    _plotter = Ok and
+    _display = Ok and
+    _word_processor = Ok and
+    graph_syst = Ok,
+THEN
+    config = Ok.
+RULE (2)
+IF
+    processor_type = XT,
+THEN
+    processor = Ok.
+RULE (3)
+IF
+    processor_type = 80286,
+THEN
+    processor = Ok.
+RULE (4)
+IF
+    processor_type = 80386,
+THEN
+    processor = Ok.
+RULE (5)
+IF
+    processor_type = 80486,
+THEN
+    processor = Ok.
+RULE (6)
+IF
+    winch_val = 10_Mb,
+THEN
+    winch = Ok.
+RULE (7)
+IF
+    winch_val = 40_Mb,
+THEN
+    winch = Ok.
+RULE (8)
+IF
+    winch_val = 80_Mb,
+THEN
+    winch = Ok.
+RULE (9)
+IF
+    winch_val = 120_Mb,
+THEN
+    winch = Ok.
+RULE (10)
+IF
+    printer_type = letter,
+THEN
+    printer = Ok.
+RULE (11)
+IF
+    printer_type = matrix,
+THEN
+    printer = Ok.
+RULE (12)
+IF
+    printer_type = laser,
+THEN
+    printer = Ok.
+RULE (13)
+IF
+    goal = data_preparation,
+THEN
+    processor_type = XT and
+    winch_val = 10_Mb and
+    plotter = No and
+    graphics_system = noneeded.
+RULE (14)
+IF
+    data_amount = mean,
+THEN
+    winch_val = 40_Mb.
+RULE (15)
+IF
+    data_amount = large,
+THEN
+    winch_val = 80_Mb.
+RULE (16)
+IF
+    goal = control and
+    area = small  and
+    calcul_amount = small,
+THEN
+    processor_type = XT and
+    winch_val = 10_Mb.
+RULE (17)
+IF
+    data_amount = huge,
+THEN
+    winch_val = 120_Mb.
+RULE (18)
+IF
+    data_amount = small,
+THEN
+    winch_val = 10_Mb.
+RULE (19)
+IF
+    calcul_amount = small,
+THEN
+    processor_type = XT  cf = 90 and
+    processor_type = 80286 cf = 70.
+RULE (20)
+IF
+    calcul_amount = mean,
+THEN
+    processor_type = 80286 cf = 90 and
+    processor_type = 80386 cf = 70.
+RULE (21)
+IF
+    calcul_amount = large,
+THEN
+    processor_type = 80286 cf = 50 and
+    processor_type = 80386 cf = 90 and
+    processor_type = 80486 cf = 70.
+RULE (22)
+IF
+    calcul_amount = huge,
+THEN
+    processor_type = 80386 cf = 80 and
+    processor_type = 80486 cf = 95.
+RULE (23)
+IF
+    project_price = less_1000,
+THEN
+    project_value = small.
+RULE (24)
+IF
+    project_price = 1000-10000,
+THEN
+    project_value = small cf = 40 and
+    project_value = mean cf = 90 and
+    project_value = large cf = 40.
+RULE (25)
+IF
+    project_price = 10000-100000,
+THEN
+    project_value = mean cf = 50 and
+    project_value = large cf = 90 and
+    project_value = huge cf =70.
+RULE (26)
+IF
+    project_price = greater_100000,
+THEN
+    project_value = large cf = 70 and
+    project_value = huge cf = 90.
+RULE (27)
+IF
+    project_value = small,
+THEN
+    data_amount = small cf = 80 and
+    data_amount = mean cf = 60 and
+    data_amount = large cf = 30 and
+    calcul_amount = small cf = 90 and
+    calcul_amount = mean cf = 50.
+RULE (28)
+IF
+    project_value = mean,
+THEN
+    data_amount = small cf = 50  and
+    data_amount = mean cf = 90 and
+    data_amount = large cf = 60 and
+    calcul_amount = small cf = 50 and
+    calcul_amount = mean cf = 80 and
+    calcul_amount = large cf = 30.
+RULE (29)
+IF
+    project_value = large,
+THEN
+    data_amount = mean cf = 50 and
+    data_amount = large cf = 90 and
+    data_amount = huge cf = 60 and
+    calcul_amount = small cf = 40 and
+    calcul_amount = mean cf = 70 and
+    calcul_amount = large cf = 90 and
+    calcul_amount = huge cf = 60.
+RULE (30)
+IF
+    project_value = huge,
+THEN
+    data_amount = large cf = 70 and
+    data_amount = huge cf = 90 and
+    calcul_amount = mean cf = 60 and
+    calcul_amount = large cf = 80 and
+    calcul_amount = huge cf = 80.
+RULE (31)
+IF
+    dbMS = noneeded,
+THEN
+    _dbMS = Ok.
+RULE (32)
+IF
+    dbMS = dBase,
+THEN
+    _dbMS = Ok.
+RULE (33)
+IF
+    dbMS = FoxBase,
+THEN
+    _dbMS = Ok.
+RULE (34)
+IF
+    plotter = Yes,
+THEN
+    _plotter = Ok.
+RULE (35)
+IF
+    plotter = No,
+THEN
+    _plotter = Ok.
+RULE (36)
+IF
+    display = monochrome,
+THEN
+    _display = Ok.
+RULE (37)
+IF
+    display = color,
+THEN
+    _display = Ok.
+RULE (38)
+IF
+    word_processor = simple,
+THEN
+    _word_processor = Ok.
+RULE (39)
+IF
+    word_processor = powerful,
+THEN
+    _word_processor = Ok.
+RULE (40)
+IF
+    graphics_system = noneeded,
+THEN
+    graph_syst = Ok.
+RULE (41)
+IF
+    graphics_system = simple,
+THEN
+    graph_syst = Ok.
+RULE (42)
+IF
+    graphics_system = powerful,
+THEN
+    graph_syst = Ok.
+RULE (43)
+IF
+    goal = text_processing,
+THEN
+    processor_type = XT and
+    winch_val = 10_Mb and
+    dbMS = noneeded and
+    plotter = No and
+    graphics_system = noneeded.
+RULE (44)
+IF
+    goal = text_processing and
+    text_object = publication,
+THEN
+    printer_type = laser and
+    word_processor = powerful.
+RULE (45)
+IF
+    goal = text_processing and
+    text_object = rough_draft,
+THEN
+    printer_type = matrix and
+    word_processor = simple.

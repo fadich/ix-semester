@@ -1,0 +1,10 @@
+PRINT "Main"
+GOSUB 100
+PRINT "Again in the main"
+END
+100 PRINT "We in  SUB_100"
+    GOSUB 200
+    PRINT "Again in SUB_100"
+    RETURN
+200 PRINT "We in SUB_200"
+    RETURN
