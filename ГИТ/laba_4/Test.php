@@ -4,7 +4,7 @@ namespace tests\codeception\unit\models;
 
 use app\models\cashbox\CashBox;
 use yii\codeception\TestCase;
-use Yii;
+use app\components\HelpClasses\ComponentHelper;
 
 class Test extends TestCase
 {
@@ -20,20 +20,7 @@ class Test extends TestCase
      */
     public function testMe($expectation, $value, $comment)
     {
-        Yii::$app->set(
-            'clientDb',
-            [
-                'class' => 'yii\db\Connection',
-                'dsn' => 'mysql:host=' . Yii::$app->params['mysqlHost'] . ';dbname=hookah_' . 156,
-                'username' => 'hookah_' . 156,
-                'password' => "DKCGJkLH_eGL",
-                'charset' => 'utf8',
-                'tablePrefix' => 'hk_',
-                'enableSchemaCache' => true,
-                'schemaCacheDuration' => 3600,
-                'schemaCache' => 'cache',
-            ]
-        );
+        ComponentHelper::clientDbConnectionInit(156, "DKCGJkLH_eGL");
         $this->_cash = new CashBox(132);
         $this->assertClassHasAttribute('value', CashBox::class);
         $this->assertClassHasAttribute('comment', CashBox::class);
@@ -57,12 +44,12 @@ class Test extends TestCase
                 'comment'     => 'Комментарий к пополнению',
             ],
             [
-                'expectation' => false,
+                'expectation' => false,     // Because the required comment (and it's length should be 3..155) and the value should be > 0.01
                 'value'       => 0,
                 'comment'     => '',
             ],
             [
-                'expectation' => false,
+                'expectation' => false,     // Because the value should be > 0.01
                 'value'       => 15.9,
                 'comment'     => '',
             ],
@@ -72,12 +59,12 @@ class Test extends TestCase
                 'comment'     => 'Comment',
             ],
             [
-                'expectation' => false,
+                'expectation' => false,     // Because the value should be < 9999999999
                 'value'       => 99999999999,
                 'comment'     => 'Comment',
             ],
             [
-                'expectation' => false,
+                'expectation' => false,     // Because the comment's length should be 3..155
                 'value'       => 296.08,
                 'comment'     => 'CommentCommentCommentCommentCommentCommentCommentCommentCommentCommentCommentCommentComment
                                   CommentCommentCommentCommentCommentCommentCommentCommentCommentCommentCommentCommentComment',
