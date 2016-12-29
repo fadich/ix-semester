@@ -1,0 +1,46 @@
+[AUTOROUTER]
+Autorouter=QuickRoute
+[STRATEGY]
+RouteOptions=1 1 1 0
+RouteCptInterval=120
+RouteCopperShare=0
+RouteErrorOutput=2
+RouteOutputFile=C:\NF\xi_semester\P-CADyshky\My_labs\lab_4\Strategy_2\ROptimal.PCB
+RouteReportFile=C:\NF\xi_semester\P-CADyshky\My_labs\lab_4\Strategy_2\ROptimal.LOG
+RouteAutoPass=1
+RoutePassFlags=1 0 0 0 1 1 1 1 1 1 1
+RoutePassCounts=5 2
+RouteForceMfgFlag=0
+RouteAuxiliary=1
+RouteViaGridX=1
+RouteDefaultViaStyle=(Default)
+RouteDefaultLineWidth=20320
+GridOriginRel=0app,0app
+GridModeIsAbsolute=True
+GridVisibleStyleIsDot=True
+GridIsVisible=True
+GridPromptForRel=False
+GridAbsolute=50800app
+GridRelative=50800app
+GridSequence0=42418app 42164app 42418app
+GridSequence1=63500app
+GridSequence2=50800app
+GridSequence3=127000app
+GridSequence4=25400app
+GridSequence5=254000app
+[STRATEGY2]
+RoutePassFlags=1 1 1 1 1 1 1 1 1 1 1 1
+RouteDefaultLineWidth=20320app
+GridOriginRel=0app,0app
+GridModeIsAbsolute=True
+GridVisibleStyleIsDot=True
+GridIsVisible=True
+GridPromptForRel=False
+GridAbsolute=50800app
+GridRelative=50800app
+GridSequence0=42418app 42164app 42418app
+GridSequence1=63500app
+GridSequence2=50800app
+GridSequence3=127000app
+GridSequence4=25400app
+GridSequence5=254000app
