@@ -1,0 +1,40 @@
+[AUTOROUTER]
+Autorouter=QuickRoute
+[STRATEGY]
+RouteOptions=1 1 1 0
+RouteCptInterval=120
+RouteCopperShare=0
+RouteErrorOutput=2
+RouteOutputFile=C:\lb\4\Rlb_3_opt.pcb
+RouteReportFile=C:\lb\4\Rlb_3_opt.LOG
+RouteAutoPass=1
+RoutePassFlags=1 0 0 0 1 1 1 1 1 1 1
+RoutePassCounts=5 2
+RouteForceMfgFlag=0
+RouteAuxiliary=1
+RouteViaGridX=1
+RouteDefaultViaStyle=(Default)
+RouteDefaultLineWidth=25400
+GridOriginRel=0app,0app
+GridModeIsAbsolute=True
+GridVisibleStyleIsDot=True
+GridIsVisible=True
+GridPromptForRel=False
+GridAbsolute=50800app
+GridRelative=127000app
+GridSequence0=50800app
+GridSequence1=127000app
+GridSequence2=254000app
+[STRATEGY2]
+RoutePassFlags=1 1 1 1 1 1 1 1 1 0 0 0
+RouteDefaultLineWidth=25400app
+GridOriginRel=0app,0app
+GridModeIsAbsolute=True
+GridVisibleStyleIsDot=True
+GridIsVisible=True
+GridPromptForRel=False
+GridAbsolute=50800app
+GridRelative=127000app
+GridSequence0=50800app
+GridSequence1=127000app
+GridSequence2=254000app

@@ -1,0 +1,198 @@
+P-CAD Electrical Rules Check Report
+
+======================================================================
+
+C:\lb\1\1_cor.erc:
+
+ERC Report Options:
+-------------------
+
+Single Node Nets:   On
+No Node Nets:       On
+Electrical Rules:        On
+Unconnected Pins:        On
+Unconnected Wires:       On
+Bus/Net Rules:           On
+Component Rules:         On
+Net Connectivity Rules:  On
+Hierarchy Rules:         On
+
+ERC Errors:
+-----------
+
+
+SINGLE NODE NETS:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+NO NODE NETS:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+ELECTRICAL RULES:
+
+Warning 1 -- Net GND has no output pins
+Warning 2 -- Net +5V has no input pins
+Warning 3 -- Net +5V has no output pins
+Warning 4 -- Net 6P(1) has no output pins
+Warning 5 -- Net 4P(1) has no output pins
+Warning 6 -- Net 3P(1) has no output pins
+Warning 7 -- Net NET00005 has no output pins
+Warning 8 -- Net NET00007 has no output pins
+Warning 9 -- Net 5P(1) has no output pins
+Warning 10 -- Net NET00004 has no output pins
+Warning 11 -- Net NET00006 has no output pins
+Warning 12 -- Net NET00002 has no input pins
+Warning 13 -- Net NET00017 has no input pins
+Warning 14 -- Net NET00013 has no input pins
+Warning 15 -- Net 1P3H has no output pins
+Warning 16 -- Net 2P3H has no output pins
+
+16 warning(s) detected.
+0 error(s) detected.
+
+UNCONNECTED PINS:
+
+Warning 17 -- Unconnected pin DD2-11 on sheet:Sheet1 at mils (9665.4,4901.6)
+Warning 18 -- Unconnected pin DD2-8 on sheet:Sheet1 at mils (9665.4,5098.4)
+Warning 19 -- Unconnected pin DD2-9 on sheet:Sheet1 at mils (9665.4,5295.3)
+
+----------------------------------------------------------------------
+
+29-Dec-16  10:15                                            Page    1
+
+P-CAD Electrical Rules Check Report
+
+======================================================================
+
+Warning 20 -- Unconnected pin DD3-11 on sheet:Sheet1 at mils (6929.1,3346.5)
+Warning 21 -- Unconnected pin DD3-8 on sheet:Sheet1 at mils (6929.1,3543.3)
+Warning 22 -- Unconnected pin DD3-9 on sheet:Sheet1 at mils (6929.1,3740.2)
+Warning 23 -- Unconnected pin DD1-11 on sheet:Sheet1 at mils (6811.0,6830.7)
+Warning 24 -- Unconnected pin DD1-8 on sheet:Sheet1 at mils (6811.0,7027.6)
+Warning 25 -- Unconnected pin DD1-9 on sheet:Sheet1 at mils (6811.0,7224.4)
+Warning 26 -- Unconnected pin D1-4 on sheet:Sheet2 at mils (8700.8,5362.2)
+Warning 27 -- Unconnected pin D1-2 on sheet:Sheet2 at mils (8700.8,5262.2)
+Warning 28 -- Unconnected pin D1-6 on sheet:Sheet2 at mils (8700.8,5162.2)
+
+12 warning(s) detected.
+0 error(s) detected.
+
+UNCONNECTED WIRES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+BUS/NET RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+COMPONENT RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+NET CONNECTIVITY RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+HIERARCHY RULES:
+
+
+Hierarchy is simple.
+Hierarchy is resolved.
+
+0 warning(s) detected.
+0 error(s) detected.
+
+ERC Summary:
+------------
+
+Single Node:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+No Node:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+
+----------------------------------------------------------------------
+
+29-Dec-16  10:15                                            Page    2
+
+P-CAD Electrical Rules Check Report
+
+======================================================================
+
+Electrical:
+	Errors:         0
+	Warnings:       16
+	Ignored Errors: 0
+Unconnected Pin:
+	Errors:         0
+	Warnings:       12
+	Ignored Errors: 0
+Unconnected Wire:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Bus/Net:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Component:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Net Connectivity:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Hierarchy:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+
+29-Dec-16  10:15                                            Page    3
+
