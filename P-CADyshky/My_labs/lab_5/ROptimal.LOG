@@ -1,0 +1,21 @@
+
+Thu 13:52:24  P-CAD 2001 Shape-Based Router Started on Thursday, December 29, 2016
+Thu 13:52:24  Loaded file C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Thu 13:55:31  NeuralNet class C2
+Thu 13:55:31  Fan-Out Pass 1: Completed: 0 connections in 0.0 seconds
+Thu 13:55:31  Memory  Pass 1: Completed 6 connections in 0.0 seconds
+Thu 13:55:31  Memory  Pass 2: Completed 11 connections in 0.0 seconds
+Thu 13:55:31  Pattern Pass 1:   0.0min.  57%   32U   0C,   0V "U/P/U"
+Thu 13:55:31  Pass  1:   0.0min.  61%   46R   29U   0C   1V
+Thu 13:55:31  Pass  2:   0.0min.  61%   46R   29U   0C   1V
+Thu 13:55:31  Pass  3:   0.0min.  61%   46R   29U   0C   1V
+Thu 13:55:32  Pass  4:   0.0min. 100%   75R    0U  10C   9V
+Thu 13:55:33  Pass  1:   0.0min. 100%   75R    0U   0C  18V
+Thu 13:55:34  Mitre   Pass 1: Modified 46 out of 75 in 0.0 minutes
+Thu 13:55:34  Length on Top = 44.6"
+Thu 13:55:34  Length on Bottom = 57.2"
+Thu 13:55:34  Total vias = 19
+Thu 13:55:34  100% routed with no conflicts
+Thu 13:55:34  Total Time 00:00:03
+Thu 13:58:19  Saved as: C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Thu 13:58:19  Memory used:  0% (2.687MB out of 1535.484MB)
