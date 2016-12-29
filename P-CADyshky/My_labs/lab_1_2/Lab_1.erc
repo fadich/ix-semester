@@ -1,0 +1,185 @@
+C:\NF\xi_semester\P-CADyshky\My_labs\lab_1_2\Lab_1.erc:
+
+ERC Report Options:
+-------------------
+
+Single Node Nets:   On
+No Node Nets:       On
+Electrical Rules:        On
+Unconnected Pins:        On
+Unconnected Wires:       On
+Bus/Net Rules:           On
+Component Rules:         On
+Net Connectivity Rules:  On
+Hierarchy Rules:         On
+
+ERC Errors:
+-----------
+
+
+SINGLE NODE NETS:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+NO NODE NETS:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+ELECTRICAL RULES:
+
+Warning 1 -- Net GND has no output pins
+Warning 2 -- Net +5V has no input pins
+Warning 3 -- Net +5V has no output pins
+Warning 4 -- Net XS-3 has no output pins
+Warning 5 -- Net XS-2 has no output pins
+Warning 6 -- Net XS-4 has no input pins
+Warning 7 -- Net XS-4 has no output pins
+Warning 8 -- Net XS-5 has no output pins
+Warning 9 -- Net NET00007 has no output pins
+Warning 10 -- Net XS-6 has no input pins
+Warning 11 -- Net XS-6 has no output pins
+Warning 12 -- Output pin on sheet:Sheet2 at mils (4114.2,1771.7) connected to b
+i pin
+Warning 13 -- Net DD7-10 has no input pins
+Warning 14 -- Output pin on sheet:Sheet1 at mils (6870.1,6771.7) connected to b
+i pin
+Warning 15 -- Output pin on sheet:Sheet2 at mils (4114.2,1574.8) connected to b
+i pin
+Warning 16 -- Output pin on sheet:Sheet1 at mils (6889.8,5669.3) connected to b
+i pin
+Warning 17 -- Output pin on sheet:Sheet2 at mils (4114.2,3346.5) connected to b
+i pin
+Warning 18 -- Net DD7-1 has no input pins
+Warning 19 -- Output pin on sheet:Sheet2 at mils (4114.2,3149.6) connected to b
+i pin
+Warning 20 -- Output pin on sheet:Sheet2 at mils (3681.1,6299.2) connected to b
+i pin
+Warning 21 -- Bi pin on sheet:Sheet2 at mils (11003.9,5472.4) connected to outp
+ut pin
+Warning 22 -- Net XS-1 has no output pins
+Warning 23 -- Output pin on sheet:Sheet2 at mils (8996.1,5826.8) connected to b
+i pin
+Warning 24 -- Net DD1:D-8 has no input pins
+Warning 25 -- Output pin on sheet:Sheet2 at mils (4114.2,1968.5) connected to b
+i pin
+Warning 26 -- Net DD7-9 has no input pins
+Warning 27 -- Output pin on sheet:Sheet2 at mils (4114.2,2362.2) connected to b
+i pin
+Warning 28 -- Net DD7-6 has no input pins
+Warning 29 -- Output pin on sheet:Sheet2 at mils (4114.2,2165.4) connected to b
+i pin
+Warning 30 -- Net DD7-7 has no input pins
+Warning 31 -- Output pin on sheet:Sheet1 at mils (9704.7,7204.7) connected to b
+i pin
+Warning 32 -- Net DD3:A-5 has no input pins
+Warning 33 -- Output pin on sheet:Sheet2 at mils (4114.2,2952.8) connected to b
+i pin
+Warning 34 -- Net DD7-3 has no input pins
+Warning 35 -- Output pin on sheet:Sheet2 at mils (4114.2,2755.9) connected to b
+i pin
+Warning 36 -- Net DD7-4 has no input pins
+Warning 37 -- Output pin on sheet:Sheet2 at mils (8563.0,3661.4) connected to b
+i pin
+Warning 38 -- Net DD1:C-6 has no input pins
+Warning 39 -- Output pin on sheet:Sheet2 at mils (4114.2,2559.1) connected to b
+i pin
+Warning 40 -- Net DD7-5 has no input pins
+
+40 warning(s) detected.
+0 error(s) detected.
+
+UNCONNECTED PINS:
+
+Warning 41 -- Unconnected pin DD3:1-4 on sheet:Sheet1 at mils (8129.9,7204.7)
+Warning 42 -- Unconnected pin XS1-7 on sheet:Sheet1 at mils (2677.2, 728.3)
+Warning 43 -- Unconnected pin XS1-8 on sheet:Sheet1 at mils (2677.2, 531.5)
+Warning 44 -- Unconnected pin DD3:2-10 on sheet:Sheet2 at mils (2106.3,6299.2)
+Warning 45 -- Unconnected pin DD4:1-4 on sheet:Sheet2 at mils (4429.1,6496.1)
+Warning 46 -- Unconnected pin XS2-18 on sheet:Sheet2 at mils (11003.9,2519.7)
+Warning 47 -- Unconnected pin XS2-19 on sheet:Sheet2 at mils (11003.9,2322.8)
+Warning 48 -- Unconnected pin XS2-25 on sheet:Sheet2 at mils (11003.9,1141.7)
+Warning 49 -- Unconnected pin XS2-21 on sheet:Sheet2 at mils (11003.9,1929.1)
+Warning 50 -- Unconnected pin XS2-24 on sheet:Sheet2 at mils (11003.9,1338.6)
+Warning 51 -- Unconnected pin XS2-23 on sheet:Sheet2 at mils (11003.9,1535.4)
+Warning 52 -- Unconnected pin XS2-22 on sheet:Sheet2 at mils (11003.9,1732.3)
+Warning 53 -- Unconnected pin XS2-20 on sheet:Sheet2 at mils (11003.9,2126.0)
+
+13 warning(s) detected.
+0 error(s) detected.
+
+UNCONNECTED WIRES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+BUS/NET RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+COMPONENT RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+NET CONNECTIVITY RULES:
+
+
+0 warning(s) detected.
+0 error(s) detected.
+
+HIERARCHY RULES:
+
+
+Hierarchy is simple.
+Hierarchy is resolved.
+
+0 warning(s) detected.
+0 error(s) detected.
+
+ERC Summary:
+------------
+
+Single Node:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+No Node:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Electrical:
+	Errors:         0
+	Warnings:       40
+	Ignored Errors: 0
+Unconnected Pin:
+	Errors:         0
+	Warnings:       13
+	Ignored Errors: 0
+Unconnected Wire:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Bus/Net:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Component:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Net Connectivity:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0
+Hierarchy:
+	Errors:         0
+	Warnings:       0
+	Ignored Errors: 0

@@ -1,0 +1,140 @@
+P-CAD Library Contents                                       Lab_1.sch
+
+======================================================================
+
+Library 555.LIB
+ 555¿√3                         555¿√4                         555¿√5                         555¿œ3                        
+ 555¿œ4                         555¿œ5                         555¿œ6                         555¬∆1                        
+ 555√√2                         555»¬1                         555»¬2                         555»¬3                        
+ 555»ƒ10                        555»ƒ18                        555»ƒ19                        555»ƒ4                        
+ 555»ƒ5                         555»ƒ6                         555»ƒ7                         555»≈10                       
+ 555»≈13                        555»≈14                        555»≈15                        555»≈17                       
+ 555»≈18                        555»≈19                        555»≈2                         555»≈20                       
+ 555»≈5                         555»≈6                         555»≈7                         555»≈9                        
+ 555»Ã5                         555»Ã6                         555»Ã7                         555»œ3                        
+ 555»œ4                         555»œ5                         555»œ6                         555»œ7                        
+ 555»œ8                         555»œ9                         555»–10                        555»–11                       
+ 555»–15                        555»–16                        555»–22                        555»–23                       
+ 555»–26                        555»–27                        555»–30                        555»–32                       
+ 555»–35                        555»–8                         555»–9                         555 œ11                       
+ 555 œ12                        555 œ13                        555 œ14                        555 œ15                       
+ 555 œ16                        555 œ17                        555 œ18                        555 œ2                        
+ 555 œ7                         555À¿1                         555À¿10                        555À¿11                       
+ 555À¿12                        555À¿13                        555À¿2                         555À¿3                        
+ 555À¿4                         555À¿6                         555À¿7                         555À¿9                        
+ 555À≈1                         555À≈4                         555À»1                         555À»2                        
+ 555À»3                         555À»4                         555À»6                         555ÀÀ1                        
+ 555ÀÕ1                         555ÀÕ2                         555Àœ12                        555Àœ3                        
+ 555Àœ5                         555Àœ8                         555À–11                        555À–13                       
+ 555À–4                         555œ÷1                         555–≈4                         555—œ1                        
+ 555“¬6                         555“¬9                         555“À2                         555“Ã2                        
+ 555“Ã7                         555“Ã8                         555“Ã9                         555“–2                        
+
+Qty = 104
+Library CONDENSATORS.LIB
+0,1 CHINA 10MM                 0.01 MKF-63V                   0.1-50V-IMPORT                 A7.5MM                         
+CHIN 1000MF-16VS               CHIN 1000MF-25VS               CHIN 1000MF-35VS               CHIN 1000MF-50VS               
+CHIN 100MF-160VS               CHIN 470MF-16VS                CHIN 470MF-50VS                CHINA 1000MF-16V               
+CHINA 1000MF-25V               CHINA 1000MF-35V               CHINA 1000MF-50V               CHINA 100MF-160V               
+CHINA 100MKF-16V               CHINA 100MKF-25V               CHINA 100MKF-63V               CHINA 10MKF-25V                
+CHINA 1MKF-50V                 CHINA 220MF-25VS               CHINA 220MKF-25V               CHINA 22MKF-63V                
+CHINA 4.7MKF-63V               CHINA 470MF-25VS               CHINA 470MF-35VS               CHINA 470MKF-25V               
+CHINA 470MKF-35V               CHINA 470MKF-50V               CHINA 47MF-160V                CHINA 47MF-160VS               
+CHINA 47MF-400V                CHINA 47MF-400VS               CHINA 47MKF-16V                CHINA 5600PF-50V               
+K10-17-1 T4                    K10-17A-H50                    K10-7B-33PF                    K10-7B-H30-T1                  
+K10-7B-H30-T2                  K10-7B-H30-T3                  K10-7B-H30-T4                  K10-7B-H30-T5                  
+K10-7B-H70-T1                  K10-7B-H70-T2                  K10-7B-H70-T3                  K10-7B-H70-T4                  
+K10-7B-H70-T5                  K10-7B-H90-T1                  K10-7B-H90-T2                  K10-7B-H90-T3                  
+K10-7B-H90-T4                  K10-7B-H90-T5                  K10-7B-H90-T6                  K10-7B-M1500-T1                
+K10-7B-M1500-T2                K10-7B-M1500-T3                K10-7B-M1500-T4                K10-7B-M1500-T5                
+K10-7B-M47-T1                  K10-7B-M47-T2                  K10-7B-M47-T3                  K10-7B-M47-T4                  
+K10-7B-M47-T5                  K10-7B-M750-T1                 K10-7B-M750-T2                 K10-7B-M750-T3                 
+K10-7B-M750-T4                 K10-7B-M750-T5                 K10-7B-MPO-T1                  K10-7B-MPO-T2                  
+K10-7B-MPO-T3                  K10-7B-MPO-T4                  K10-7B-MPO-T5                  K10-7B-P33-T1                  
+K10-7B-P33-T2                  K10-7B-P33-T3                  K10-7B-P33-T4                  K10-7B-P33-T5                  
+K15-5-1000-1,6KV               K15-5-300-1,6KV                K15-5-3000-3,3KV               K15-5-3300-1,6KV               
+K15-5-3300-3KV                 K15-5-3300P-3KV                K15-5-470-1,6KV                K50-29-25V-100M                
+K50-29-25V-470M                K50-29-63V-1000M               K50-35-100V-4.7                K50-35-16V-100                 
+K50-35-25V-100                 K50-35-25V-1000                K50-35-25V-22                  K50-35-25V-220                 
+K50-35-25V-2200                K50-35-40V-100                 K50-35-40V-220                 K50-35-40V-220 S               
+K50-35-40V-47                  K50-35-63V-10                  K50-35-63V-1000                K50-35-63V-22                  
+K50-53-40V-2200                K71-7-0.01                     K71-7-0.0392                   K71-7-0.499                    
+K71-7-250V-0.1MK               K73-11-160V-1.0                K73-11-250V-4700               K73-11-400V-0.56               
+K73-17-0,01-630V               K73-17-0,1-400V                K73-17-0.01-63V                K73-17-0.033-400               
+K73-17-0.047-250               K73-17-0.1-100V                K73-17-0.1-160V                K73-17-0.22-250V               
+K73-17-0.33-250V               K73-17-0.47-250V               K73-17-0.47-400V               K73-17-0.47-63V                
+K73-17-1 MKF                   K73-17-1.0-400V                K73-17-1MKF-63V                K73-17-2.2-160V                
+LCC-150M-400V                  SMD 0805                        50-16-10¬-10Ã ‘                50-35-16-470Ã ‘               
+ 50-35-25-1000Ã                 50-35-25-100Ã                  50-35-25¬-47Ã ‘                50-35-40-470Ã                 
+
+Qty = 136
+Library CONNECTORS.LIB
++12                            +5                             +9                             +9V                            
+BH-20                          BH-20-R                        BILKA-OH-30                    DB25M                          
+GND                            KONT-1-3                       P2K                            P2K1                           
+PLD 20                         PO3ETKA-OH-10                  PO3ETKA-OH-11                  PO3ETKA-OH-13                  
+PO3ETKA-OH-14                  PO3ETKA-OH-15                  PO3ETKA-OH-25                  PO3ETKA-OH-26                  
+PO3ETKA-OH-27                  PO3ETKA-OH-30                  PO3ETKA-OH-4                   PO3ETKA-OH-5                   
+PO3ETKA-OH-8                   RELE 12V 12A                   RS 10                          SWT 9                          
+ À≈ÃÕ»  “¬-01¿1                À≈œ≈—“Œ                        
+Qty = 30
+Library DEMO.LIB
++12V                           +5V                            7400                           7404                           
+7406                           7408                           74154                          74273                          
+7432                           74LS138                        74LS244                        74LS245                        
+74LS373                        CAP-NON                        CAP-POL                        CAP-POL_H                      
+CAP300                         CONN15M                        CONN20F                        CONN20M                        
+CONN20PIN                      CONN25F                        CONN26F                        CONN9M                         
+GND                            GNDANALOG                      IDC2X5F                        LCDDRVR44                      
+LM7812CTB                      POLCAP                         RES                            RES1200                        
+RES4SIPISOL                    RES500                         RES600                         SHEETIN                        
+SHEETOUT                       SWITCH4DIPISOL                 SWITCHDPDT                     TB2PIN                         
+VCC                            
+Qty = 41
+Library REZISTORS.LIB
+C2-33-2-S                      C2-33H-0.125-10                C2-33H-0.125-7.5               C2-33H-0.125-S                 
+C2-33H-0.125-S2                C2-33H-0.25                    C2-33H-0.25-S                  C2-33H-0.5                     
+C2-33H-0.5-S                   C2-33H-0.5-S 7.5               C2-33H-1                       C2-33H-2                       
+CH2-1A-180B                    Cœ3-39A                        Cœ5-2B6                        TEMP GP3M2                     
+—2-33H-0.125                   —5-5-5                         —œ5-22                         
+Qty = 19
+Library P.LIB
++12V                           +14V                           +15V                           +24V                           
++24VA                          +24VB                          +5V                            4N28N                          
+4N29                           7493                           74HC10                         74LS09D                        
+74LS244                        AL307                          AOT147                         AOT147A                        
+AOT147A1                       AOT147S                        AOT147_5                       BTN_PKB9-1                     
+CAP1206                        CAP200                         CAP400                         CAP4X7R                        
+CAP5X11R                       CAP5X7R                        CAP6X12R                       CAP6X12_125R                   
+CAP6X7R                        CAP8X9R                        CAPD10                         CAPD13                         
+CAPD16                         CAPD4                          CAPD5                          CAPD6                          
+CAPD6_125                      CAPD8                          CAP_SMT_A                      CAP_SMT_B                      
+CAP_SMT_C                      CAP_SMT_D                      CD4001                         CD4011                         
+CD4013                         CD4046                         CD4046_CUT                     CD4050                         
+CD4098                         CWF4M                          CWF4RM                         CWF6RM                         
+DB9RM                          ED500V                         GND                            GND_POWER                      
+IDC10M                         IDC10RM                        IDC16M                         IDC26M                         
+IDC40M                         IDCC26RM                       IDCC34RM                       IDCC40RM                       
+IND_MLT05                      JUMPER                         KD102                          KR1006                         
+KT3102                         KT315                          KT361                          KT961                          
+KT972                          KT973                          LED_100_DOUBLE                 LM111JA                        
+LM393JA                        LM555CMA                       LM556CMA                       LM78L05ACZA                    
+LM78M05                        LOGO_SILK                      LOGO_TOP                       NUT                            
+NUT32                          RES0805                        RES1206                        RES_0125                       
+RES_025                        RES_05                         RES_1                          RES_C516MV                     
+RES_HP1-4-9                    RES_TRIM_3296W                 RES_TRIM_POZ3                  RES_TRIM_SP3-19A               
+RES_TRIM_SP3-38                RES_TRIM_SP5-16                RES_TRIM_SP5-2                 RES_TRIM_SP5-28                
+RES_VAR_PPB1                   RES_VAR_PTV09                  SCREW20                        SCREW25                        
+SCREW32                        SCREW32_7                      SHORTER                        SN74HC132D                     
+SN74LS175D                     SPEAKER                        SW_PS580                       SW_V1561                       
+SW_VDM1-2                      SW_VDM1-2R                     SW_VDM1-8                      SW_VDM1-8R                     
+TA8435H                        TA8435HR                       TA8435H_SMT                    TDA2005                        
+TDA2005R                       TDA2030                        TESTPOINT                      
+Qty = 123
+Library 530DIP.LIB
+M530IK1                        M530IR18                       M530IR19                       M530IR20                       
+M530IR21                       M530KP11                       M530LA12                       M530LA2                        
+M530LA3                        M530LA4                        M530LI1                        M530LI3                        
+M530LN1                        M530LN2                        M530LP5                        M530LR9                        
+M530TM2                        M530TV9                        
+Qty = 18

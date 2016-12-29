@@ -1,0 +1,21 @@
+P-CAD Parts Usage                                            Lab_1.sch
+
+======================================================================
+
+Units used = mil
+RefDes          Type            Unused Parts    ComponentLibrar
+--------------- --------------- --------------- ---------------
+
+C1              K10-7B-H90-T3   (All Parts Used CONDENSATORS.LI
+C2              CHINA 1MKF-50V  (All Parts Used CONDENSATORS.LI
+DD1              555ÀÕ1         5 6             555.LIB        
+DD2              555À¿3         (All Parts Used 555.LIB        
+DD3              555“Ã2         (All Parts Used 555.LIB        
+DD4              555“Ã2         2               555.LIB        
+DD5              555À¿3         (All Parts Used 555.LIB        
+DD6              555»≈2         (All Parts Used 555.LIB        
+DD7              555»ƒ6         (All Parts Used 555.LIB        
+R1              C2-33H-0.125-10 (All Parts Used REZISTORS.LIB  
+R2              C2-33H-0.125-10 (All Parts Used REZISTORS.LIB  
+XS1             PO3ETKA-OH-8    (All Parts Used CONNECTORS.LIB 
+XS2             PO3ETKA-OH-25   (All Parts Used CONNECTORS.LIB 
