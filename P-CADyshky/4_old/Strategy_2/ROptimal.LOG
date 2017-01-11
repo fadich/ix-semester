@@ -1,0 +1,324 @@
+P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+
+======================================================================
+
+Input file:    C:\NF\xi_semester\P-CADyshky\My_labs\lab_4\Strategy_2\O
+ptimal.PCB
+Output file:   C:\NF\xi_semester\P-CADyshky\My_labs\lab_4\Strategy_2\R
+Optimal.PCB
+Strategy file: C:\NF\xi_semester\P-CADyshky\My_labs\lab_4\Strategy_2\O
+ptimal.STR
+
+All dimensions are in mils unless stated.
+
+Routed by:     Quick Route
+
+Start time:    13:41:05 29-Dec-16
+
+Free memory:   -865017856
+
+Strategy selections:
+
+  Routing grid:                20.0 
+
+
+Layer selections:
+
+  Signal Bias or    Plane                        Clearances
+  Layer  Selection  Net Name          P-P   P-L   L-L   V-P   V-L   V-
+V
+  ------ ---------- ---------------- ----- ----- ----- ----- ----- ---
+--
+  Top    Hor                            10    10    10    10    10    
+10
+  Bottom Ver                            10    10    10    10    10    
+10
+  --------------------------------------------------------------------
+--
+
+
+  * Selected by router.
+
+
+Net classes:
+
+    Net                                          Max
+   Class  Width     Via Padstack     Prio Layer  Vias Notes
+  ------- ----- -------------------- ---- ------ ---- -----
+  Default   8.0 (Default)               1 All      *       
+        1   2.0 (Default)               1 All      *       
+  ---------------------------------------------------------
+  Notes: F = Fixed, do not ripup.
+         N = Do not route.
+         W = Use wide pass.
+
+
+Scheduled pass selection:
+
+  Pass                    Net Classes
+  Num  Pass Name          DFT 1
+  ---- ------------------ -----------
+    1  Wide line routing   x   
+    2  Horizontal          x   
+
+----------------------------------------------------------------------
+
+29-Dec-16  13:41                                            Page    1
+
+P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+
+======================================================================
+
+    3  Vertical            x   
+    4  'L' routes          x   
+    5  'Z' routes          x   
+    6  'C' routes          x   
+    7  Any node (2 vias)   x   
+    8  Maze                x   
+    9  Any node (maze)     x   
+   10  Trace cleanup #1    x   
+   11  Trace cleanup #2    x   
+   12  Via minimization    x   
+   13  Via minimization        
+  -----------------------------------
+
+  * Selected by router.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+
+29-Dec-16  13:41                                            Page    2
+
+P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+
+======================================================================
+
+75 total connections on the board.
+
+Pass Performance Summary:
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Wide line routing      Pass Num:   1    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    0 (100%)         0 (  0%)
+    Not completed                0 (100%)        75
+  Vias                           0 (100%)         0
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Horizontal             Pass Num:   2    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                   14 (100%)        14 ( 18%)
+    Not completed                0 (  0%)        61
+  Vias                           0 (100%)         0
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Vertical               Pass Num:   3    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                   15 (100%)        29 ( 38%)
+    Not completed                0 (  0%)        46
+  Vias                           0 (100%)         0
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  'L' routes             Pass Num:   4    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                   33 (100%)        62 ( 82%)
+    Not completed                0 (  0%)        13
+  Vias                          33 (100%)        33
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  'Z' routes             Pass Num:   5    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    3 (100%)        65 ( 86%)
+
+----------------------------------------------------------------------
+
+29-Dec-16  13:41                                            Page    3
+
+P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+
+======================================================================
+
+    Not completed                0 (  0%)        10
+  Vias                           6 ( 15%)        39
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  'C' routes             Pass Num:   6    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    2 (100%)        67 ( 89%)
+    Not completed                0 (  0%)         8
+  Vias                           4 (  9%)        43
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Any node (2 vias)      Pass Num:   7    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    2 (100%)        69 ( 92%)
+    Not completed                0 (  0%)         6
+  Vias                           4 (  8%)        47
+  Elapsed time             0:00:00 (100%)   0:00:00
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Maze                   Pass Num:   8    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    3 (100%)        72 ( 96%)
+    Not completed                0 (  0%)         3
+  Vias                           8 ( 14%)        55
+  Elapsed time             0:00:01 (100%)   0:00:01
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Any node (maze)        Pass Num:   9    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    0 (100%)        72 ( 96%)
+    Not completed                0 (100%)         3
+  Vias                           0 (  0%)        55
+  Elapsed time             0:00:00 (  0%)   0:00:01
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Trace cleanup #1       Pass Num:  10    Overall
+
+----------------------------------------------------------------------
+
+29-Dec-16  13:41                                            Page    4
+
+P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+
+======================================================================
+
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    0 (100%)        72 ( 96%)
+    Not completed                0 (100%)         3
+  Vias                           0 (  0%)        55
+  Elapsed time             0:00:00 (  0%)   0:00:01
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Trace cleanup #2       Pass Num:  11    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    0 (100%)        72 ( 96%)
+    Not completed                0 (100%)         3
+  Vias                           0 (  0%)        55
+  Elapsed time             0:00:00 (  0%)   0:00:01
+  -------------------------------------------------
+
+
+ Net class: Default  Width: 8.0mil        Via Padstack: (Default)     
+      
+  Via minimization       Pass Num:  12    Overall
+  ---------------------- ---------------- ---------
+  Routes                                         75
+    Completed                    0 (100%)        72 ( 96%)
+    Not completed                0 (100%)         3
+  Vias                         -17 (-30%)        38
+  Elapsed time             0:00:00 (  0%)   0:00:01
+  -------------------------------------------------
+
+
+
+Final statistics:
+
+  Board:
+    Physical dimensions (inches):            3.560 by 1.610
+    Routing area (square inches):            5.732
+    Total pads in file:                    145
+    Equivalent 16-pin ICs (EICs):            9.063
+    Density (square inches per EIC):         0.632
+  Routing performance:
+    Vias total:                             38 ( 26% of total pads)
+    Vias added:                             38 (100% of total vias)
+    Routed connections (this run):          72
+    Routed connections (total):             72 ( 96%)
+    Unrouted connections (total):            3 (  4%)
+    Total routing time:                0:00:01
+
+Start time:       13:41:05 29-Dec-16
+Completion time:  13:41:06 29-Dec-16
+Free memory:      -865017856
+
+End of log file.

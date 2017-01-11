@@ -19,3 +19,85 @@ Thu 13:55:34  100% routed with no conflicts
 Thu 13:55:34  Total Time 00:00:03
 Thu 13:58:19  Saved as: C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
 Thu 13:58:19  Memory used:  0% (2.687MB out of 1535.484MB)
+
+Wed 23:47:25  P-CAD 2001 Shape-Based Router Started on Wednesday, January 11, 2017
+Wed 23:47:25  Loaded file C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Wed 23:47:53  NeuralNet class C2
+Wed 23:47:53  Fan-Out Pass 1: Completed: 0 connections in 0.0 seconds
+Wed 23:47:53  Memory  Pass 1: Completed 6 connections in 0.0 seconds
+Wed 23:47:53  Memory  Pass 2: Completed 11 connections in 0.0 seconds
+Wed 23:47:54  Pattern Pass 1:   0.0min.  57%   32U   0C,   0V "U/P/U"
+Wed 23:47:54  Pass  1:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:47:54  Pass  2:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:47:54  Pass  3:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:47:54  Pass  4:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:47:54  Pass  5:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:47:54  Pass  6:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:47:54  Pass  7:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:47:54  Pass  8:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:47:54  Pass  9:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:47:54  Pass 10:   0.0min. 100%   75R    0U  10C  12V
+Wed 23:47:55  Pass  1:   0.0min. 100%   75R    0U   3C  15V
+Wed 23:47:55  Pass  2:   0.0min. 100%   75R    0U   3C  15V
+Wed 23:47:55  Pass  3:   0.0min. 100%   75R    0U   0C  20V
+Wed 23:47:56  Mitre   Pass 1: Modified 40 out of 75 in 0.0 minutes
+Wed 23:47:56  Length on Top = 45.2"
+Wed 23:47:56  Length on Bottom = 52.5"
+Wed 23:47:56  Total vias = 20
+Wed 23:47:56  100% routed with 1 remaining conflict
+Wed 23:47:56  Total Time 00:00:02
+Wed 23:48:11  Memory used:  0% (2.687MB out of 1535.484MB)
+
+Wed 23:49:55  P-CAD 2001 Shape-Based Router Started on Wednesday, January 11, 2017
+Wed 23:49:55  Loaded file C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Wed 23:51:21  NeuralNet class C2
+Wed 23:51:21  Fan-Out Pass 1: Completed: 0 connections in 0.0 seconds
+Wed 23:51:21  Memory  Pass 1: Completed 6 connections in 0.0 seconds
+Wed 23:51:21  Memory  Pass 2: Completed 11 connections in 0.0 seconds
+Wed 23:51:21  Pattern Pass 1:   0.0min.  57%   32U   0C,   0V "U/P/U"
+Wed 23:51:21  Pass  1:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:51:21  Pass  2:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:51:21  Pass  3:   0.0min.  58%   44R   31U   0C   0V
+Wed 23:51:21  Pass  4:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:51:21  Pass  5:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:51:21  Pass  6:   0.0min.  61%   46R   29U   0C   0V
+Wed 23:51:21  Pass  7:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:51:21  Pass  8:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:51:21  Pass  9:   0.0min.  65%   49R   26U   0C   1V
+Wed 23:51:22  Pass 10:   0.0min. 100%   75R    0U  10C  12V
+Wed 23:51:22  Pass  1:   0.0min. 100%   75R    0U   3C  15V
+Wed 23:51:22  Pass  2:   0.0min. 100%   75R    0U   3C  15V
+Wed 23:51:23  Pass  3:   0.0min. 100%   75R    0U   0C  20V
+Wed 23:51:24  Mitre   Pass 1: Modified 40 out of 75 in 0.0 minutes
+Wed 23:51:24  Length on Top = 45.2"
+Wed 23:51:24  Length on Bottom = 52.5"
+Wed 23:51:24  Total vias = 20
+Wed 23:51:24  100% routed with 1 remaining conflict
+Wed 23:51:24  Total Time 00:00:02
+Wed 23:52:40  Saved as: C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Wed 23:52:40  Memory used:  0% (2.687MB out of 1535.484MB)
+
+Wed 23:55:30  P-CAD 2001 Shape-Based Router Started on Wednesday, January 11, 2017
+Wed 23:55:30  Loaded file C:\NF\xi_semester\P-CADyshky\My_labs\lab_5\Optimal.PRF
+Wed 23:57:20  NeuralNet class C2
+Wed 23:57:20  Fan-Out Pass 1: Completed: 0 connections in 0.0 seconds
+Wed 23:57:20  Pass  1:   0.0min.  94%   71R    4U  14C  20V
+Wed 23:57:20  Pass  2:   0.0min.  96%   72R    3U   0C  20V
+Wed 23:57:20  Pass  3:   0.0min.  96%   72R    3U   0C  20V
+Wed 23:57:20  Pass  4:   0.0min.  96%   72R    3U   0C  20V
+Wed 23:57:20  Pass  5:   0.0min. 100%   75R    0U   0C  21V
+Wed 23:57:22  Mitre   Pass 1: Modified 38 out of 75 in 0.0 minutes
+Wed 23:57:22  Length on Top = 43.3"
+Wed 23:57:22  Length on Bottom = 53.1"
+Wed 23:57:22  Total vias = 23
+Wed 23:57:22  100% routed with no conflicts
+Wed 23:57:22  Total Time 00:00:02
+Wed 23:57:27  NeuralNet class C2
+Wed 23:57:27  Fan-Out Pass 1: Completed: 0 connections in 0.0 seconds
+Wed 23:57:29  Mitre   Pass 1: Modified 30 out of 75 in 0.0 minutes
+Wed 23:57:29  Length on Top = 39.3"
+Wed 23:57:29  Length on Bottom = 55.2"
+Wed 23:57:29  Total vias = 24
+Wed 23:57:29  100% routed with no conflicts
+Wed 23:57:29  Total Time 00:00:04
+Wed 23:58:38  Memory used:  0% (2.687MB out of 1535.484MB)

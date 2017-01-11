@@ -1,4 +1,4 @@
-P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+P-CAD 2001 PCB TRIAL VERSION - 10 days left Version 16.00.56 Routing Log File
 
 ======================================================================
 
@@ -13,9 +13,9 @@ All dimensions are in mils unless stated.
 
 Routed by:     Quick Route
 
-Start time:    13:28:02 29-Dec-16
+Start time:    23:00:18 11-Jan-17
 
-Free memory:   -865001472
+Free memory:   -835534848
 
 Strategy selections:
 
@@ -46,7 +46,7 @@ Net classes:
    Class  Width     Via Padstack     Prio Layer  Vias Notes
   ------- ----- -------------------- ---- ------ ---- -----
   Default   8.0 (Default)               1 All      *       
-        1   2.0 (Default)               1 All      *       
+        1  39.4 (Default)               1 All      *       
   ---------------------------------------------------------
   Notes: F = Fixed, do not ripup.
          N = Do not route.
@@ -63,9 +63,9 @@ Scheduled pass selection:
 
 ----------------------------------------------------------------------
 
-29-Dec-16  13:28                                            Page    1
+11-Jan-17  23:00                                            Page    1
 
-P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+P-CAD 2001 PCB TRIAL VERSION - 10 days left Version 16.00.56 Routing Log File
 
 ======================================================================
 
@@ -128,9 +128,9 @@ Scheduled pass selection:
 
 ----------------------------------------------------------------------
 
-29-Dec-16  13:28                                            Page    2
+11-Jan-17  23:00                                            Page    2
 
-P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+P-CAD 2001 PCB TRIAL VERSION - 10 days left Version 16.00.56 Routing Log File
 
 ======================================================================
 
@@ -143,9 +143,9 @@ Pass Performance Summary:
   Wide line routing      Pass Num:   1    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    0 (100%)         0 (  0%)
-    Not completed                0 (100%)        75
-  Vias                           0 (100%)         0
+    Completed                   16 (100%)        16 ( 21%)
+    Not completed                0 (  0%)        59
+  Vias                          22 (100%)        22
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -155,9 +155,9 @@ Pass Performance Summary:
   Horizontal             Pass Num:   2    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                   14 (100%)        14 ( 18%)
-    Not completed                0 (  0%)        61
-  Vias                           0 (100%)         0
+    Completed                    9 (100%)        25 ( 33%)
+    Not completed                0 (  0%)        50
+  Vias                           0 (  0%)        22
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -167,9 +167,9 @@ Pass Performance Summary:
   Vertical               Pass Num:   3    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                   15 (100%)        29 ( 38%)
-    Not completed                0 (  0%)        46
-  Vias                           0 (100%)         0
+    Completed                   14 (100%)        39 ( 52%)
+    Not completed                0 (  0%)        36
+  Vias                           0 (  0%)        22
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -179,9 +179,9 @@ Pass Performance Summary:
   'L' routes             Pass Num:   4    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                   33 (100%)        62 ( 82%)
-    Not completed                0 (  0%)        13
-  Vias                          33 (100%)        33
+    Completed                   21 (100%)        60 ( 80%)
+    Not completed                0 (  0%)        15
+  Vias                          21 ( 48%)        43
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -191,18 +191,18 @@ Pass Performance Summary:
   'Z' routes             Pass Num:   5    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    3 (100%)        65 ( 86%)
+    Completed                    4 (100%)        64 ( 85%)
 
 ----------------------------------------------------------------------
 
-29-Dec-16  13:28                                            Page    3
+11-Jan-17  23:00                                            Page    3
 
-P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+P-CAD 2001 PCB TRIAL VERSION - 10 days left Version 16.00.56 Routing Log File
 
 ======================================================================
 
-    Not completed                0 (  0%)        10
-  Vias                           6 ( 15%)        39
+    Not completed                0 (  0%)        11
+  Vias                           8 ( 15%)        51
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -212,9 +212,9 @@ Pass Performance Summary:
   'C' routes             Pass Num:   6    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    2 (100%)        67 ( 89%)
-    Not completed                0 (  0%)         8
-  Vias                           4 (  9%)        43
+    Completed                    2 (100%)        66 ( 88%)
+    Not completed                0 (  0%)         9
+  Vias                           4 (  7%)        55
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -224,9 +224,9 @@ Pass Performance Summary:
   Any node (2 vias)      Pass Num:   7    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    2 (100%)        69 ( 92%)
-    Not completed                0 (  0%)         6
-  Vias                           4 (  8%)        47
+    Completed                    0 (100%)        66 ( 88%)
+    Not completed                0 (100%)         9
+  Vias                           0 (  0%)        55
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -236,9 +236,9 @@ Pass Performance Summary:
   Maze                   Pass Num:   8    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    3 (100%)        72 ( 96%)
-    Not completed                0 (  0%)         3
-  Vias                           8 ( 14%)        55
+    Completed                    5 (100%)        71 ( 94%)
+    Not completed                0 (  0%)         4
+  Vias                          18 ( 24%)        73
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -248,9 +248,9 @@ Pass Performance Summary:
   Any node (maze)        Pass Num:   9    Overall
   ---------------------- ---------------- ---------
   Routes                                         75
-    Completed                    0 (100%)        72 ( 96%)
-    Not completed                0 (100%)         3
-  Vias                           0 (  0%)        55
+    Completed                    0 (100%)        71 ( 94%)
+    Not completed                0 (100%)         4
+  Vias                           0 (  0%)        73
   Elapsed time             0:00:00 (100%)   0:00:00
   -------------------------------------------------
 
@@ -261,9 +261,9 @@ Final statistics:
 
 ----------------------------------------------------------------------
 
-29-Dec-16  13:28                                            Page    4
+11-Jan-17  23:00                                            Page    4
 
-P-CAD 2001 PCB TRIAL VERSION - 23 days left Version 16.00.56 Routing Log File
+P-CAD 2001 PCB TRIAL VERSION - 10 days left Version 16.00.56 Routing Log File
 
 ======================================================================
 
@@ -274,15 +274,15 @@ Final statistics:
     Equivalent 16-pin ICs (EICs):            9.063
     Density (square inches per EIC):         0.632
   Routing performance:
-    Vias total:                             55 ( 37% of total pads)
-    Vias added:                             55 (100% of total vias)
-    Routed connections (this run):          72
-    Routed connections (total):             72 ( 96%)
-    Unrouted connections (total):            3 (  4%)
+    Vias total:                             73 ( 50% of total pads)
+    Vias added:                             73 (100% of total vias)
+    Routed connections (this run):          71
+    Routed connections (total):             71 ( 94%)
+    Unrouted connections (total):            4 (  6%)
     Total routing time:                0:00:00
 
-Start time:       13:28:02 29-Dec-16
-Completion time:  13:28:02 29-Dec-16
-Free memory:      -865001472
+Start time:       23:00:18 11-Jan-17
+Completion time:  23:00:18 11-Jan-17
+Free memory:      -835534848
 
 End of log file.
